@@ -1,6 +1,10 @@
 import ItemListScreen from '../item-list-screen/item-list-screen';
 
-function MainScreen(): JSX.Element {
+type ItemListScreenProps = {
+  offersCount: number;
+}
+
+function MainScreen({offersCount}: ItemListScreenProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
