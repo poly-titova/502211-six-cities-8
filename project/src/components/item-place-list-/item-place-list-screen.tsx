@@ -1,4 +1,4 @@
-function ItemListScreen(): JSX.Element {
+function ItemPlaceList(): JSX.Element {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -43,4 +43,4 @@ function ItemListScreen(): JSX.Element {
   );
 }
 
-export default ItemListScreen;
+export default ItemPlaceList;

@@ -1,4 +1,4 @@
-function FormScreen(): JSX.Element {
+function Form(): JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
@@ -20,4 +20,4 @@ function FormScreen(): JSX.Element {
   );
 }
 
-export default FormScreen;
+export default Form;
