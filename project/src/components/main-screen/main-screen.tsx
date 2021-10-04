@@ -6,7 +6,7 @@ type ItemPlaceListProps = {
   offersCount: number;
 }
 
-function MainScreen({offersCount}: ItemPlaceListProps): JSX.Element {
+function MainScreen({ offersCount }: ItemPlaceListProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -32,16 +32,14 @@ function MainScreen({offersCount}: ItemPlaceListProps): JSX.Element {
             <Form />
 
             <div className="cities__places-list places__list tabs__content">
-              <ItemPlaceList />
-              <ItemPlaceList />
-              <ItemPlaceList />
-              <ItemPlaceList />
-              <ItemPlaceList />
+              <div className="cities__places-list places__list tabs__content">
+                {Array(5).fill(null).slice(0, offersCount).map((_,ix) => <ItemPlaceList кеу={ix} />)}
+              </div>
             </div>
           </section>
 
           <div className="cities__right-section">
-            <section className="cities__map map"/>
+            <section className="cities__map map" />
           </div>
         </div>
       </div>
