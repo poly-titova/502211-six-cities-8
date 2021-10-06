@@ -33,7 +33,15 @@ function MainScreen({ offersCount }: ItemPlaceListProps): JSX.Element {
 
             <div className="cities__places-list places__list tabs__content">
               <div className="cities__places-list places__list tabs__content">
-                {Array(5).fill(null).slice(0, offersCount).map((_,ix) => <ItemPlaceList кеу={ix} />)}
+                {
+                  Array(5)
+                    .fill(null)
+                    .map(
+                      (_, ix) => (
+                        <ItemPlaceList key={ix.toString()} />
+                      ),
+                    )
+                }
               </div>
             </div>
           </section>
