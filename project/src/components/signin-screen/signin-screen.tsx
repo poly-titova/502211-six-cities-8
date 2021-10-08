@@ -1,4 +1,5 @@
 function SignInScreen(): JSX.Element {
+  const href = '#';
   return (
     <main className="page__main page__main--login">
       <div className="page__login-container container">
@@ -18,7 +19,7 @@ function SignInScreen(): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
+            <a className="locations__item-link" href={href}>
               <span>Amsterdam</span>
             </a>
           </div>
