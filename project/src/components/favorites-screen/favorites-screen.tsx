@@ -1,4 +1,5 @@
 function FavoritesScreen(): JSX.Element {
+  const href = '#';
   return (
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">
@@ -8,7 +9,7 @@ function FavoritesScreen(): JSX.Element {
             <li className="favorites__locations-items">
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">
-                  <a className="locations__item-link" href="#">
+                  <a className="locations__item-link" href={href}>
                     <span>Amsterdam</span>
                   </a>
                 </div>
@@ -16,8 +17,8 @@ function FavoritesScreen(): JSX.Element {
               <div className="favorites__places">
                 <article className="favorites__card place-card">
                   <div className="favorites__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image" />
+                    <a href={href}>
+                      <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place" />
                     </a>
                   </div>
                   <div className="favorites__card-info place-card__info">
@@ -35,12 +36,12 @@ function FavoritesScreen(): JSX.Element {
                     </div>
                     <div className="place-card__rating rating">
                       <div className="place-card__stars rating__stars">
-                        <span style={{ width: "100%" }} />
+                        <span style={{ width: '100%' }} />
                         <span className="visually-hidden">Rating</span>
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Nice, cozy, warm big bed apartment</a>
+                      <a href={href}>Nice, cozy, warm big bed apartment</a>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
@@ -48,8 +49,8 @@ function FavoritesScreen(): JSX.Element {
 
                 <article className="favorites__card place-card">
                   <div className="favorites__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <img className="place-card__image" src="img/room-small.jpg" width="150" height="110" alt="Place image" />
+                    <a href={href}>
+                      <img className="place-card__image" src="img/room-small.jpg" width="150" height="110" alt="Place" />
                     </a>
                   </div>
                   <div className="favorites__card-info place-card__info">
@@ -67,12 +68,12 @@ function FavoritesScreen(): JSX.Element {
                     </div>
                     <div className="place-card__rating rating">
                       <div className="place-card__stars rating__stars">
-                        <span style={{ width: "80%" }}></span>
+                        <span style={{ width: '80%' }}></span>
                         <span className="visually-hidden">Rating</span>
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Wood and stone place</a>
+                      <a href={href}>Wood and stone place</a>
                     </h2>
                     <p className="place-card__type">Private room</p>
                   </div>
@@ -83,7 +84,7 @@ function FavoritesScreen(): JSX.Element {
             <li className="favorites__locations-items">
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">
-                  <a className="locations__item-link" href="#">
+                  <a className="locations__item-link" href={href}>
                     <span>Cologne</span>
                   </a>
                 </div>
@@ -91,8 +92,8 @@ function FavoritesScreen(): JSX.Element {
               <div className="favorites__places">
                 <article className="favorites__card place-card">
                   <div className="favorites__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <img className="place-card__image" src="img/apartment-small-04.jpg" width="150" height="110" alt="Place image" />
+                    <a href={href}>
+                      <img className="place-card__image" src="img/apartment-small-04.jpg" width="150" height="110" alt="Place" />
                     </a>
                   </div>
                   <div className="favorites__card-info place-card__info">
@@ -110,12 +111,12 @@ function FavoritesScreen(): JSX.Element {
                     </div>
                     <div className="place-card__rating rating">
                       <div className="place-card__stars rating__stars">
-                        <span style={{ width: "100%" }}></span>
+                        <span style={{ width: '100%' }}></span>
                         <span className="visually-hidden">Rating</span>
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">White castle</a>
+                      <a href={href}>White castle</a>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
