@@ -6,12 +6,14 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import RoomScreen from '../room-screen/room-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import { Offers } from '../../types/offers';
 
 type AppScreenProps = {
   offersCount: number;
+  offers: Offers;
 }
 
-function App({ offersCount }: AppScreenProps): JSX.Element {
+function App({ offersCount, offers }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
