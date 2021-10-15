@@ -6,7 +6,7 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import RoomScreen from '../room-screen/room-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import { Offers } from '../../types/offers';
+import { Offers, Gallery, InsideList } from '../../types/offers';
 
 type AppScreenProps = {
   offersCount: number;
@@ -14,11 +14,13 @@ type AppScreenProps = {
 }
 
 function App({ offersCount, offers }: AppScreenProps): JSX.Element {
+  const [firstOffer] = offers;
+  
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <MainScreen offersCount={offersCount} />
+          <MainScreen offersCount={offersCount} offer={firstOffer as [Gallery, InsideList]}/>
         </Route>
         <Route exact path={AppRoute.Login}>
           <SignInScreen />

@@ -4,7 +4,7 @@ export type Offers = {
   name: string;
   gallery: Gallery[];
   rating: number;
-  entire: string;
+  type: string;
   bedrooms: string;
   adults: string;
   priceValue: number;
