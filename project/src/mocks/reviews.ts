@@ -1,6 +1,6 @@
-import { Reviews } from '../types/reviews';
+import { Reviews } from '../types/review';
 
-export const reviews: Reviews[] = [
+export const reviews: Reviews = [
   {
     userAvatar: 'img/avatar-max.jpg',
     userName: 'Max',

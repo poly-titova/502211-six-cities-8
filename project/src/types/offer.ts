@@ -1,5 +1,4 @@
-export type Offers = {
-  id: number;
+export type Offer = {
   mark: string;
   name: string;
   gallery: Gallery[];
@@ -24,3 +23,5 @@ export type Gallery = {
 export type InsideList = {
   item: string;
 };
+
+export type Offers = Offer[];
