@@ -19,7 +19,7 @@ function App({ offersCount, offers }: AppScreenProps): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <MainScreen offersCount={offersCount} />
+          <MainScreen offersCount={offersCount} offers={offers}/>
         </Route>
         <Route exact path={AppRoute.Login}>
           <SignInScreen />

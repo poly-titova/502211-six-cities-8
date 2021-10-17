@@ -1,6 +1,7 @@
 export type Offer = {
   mark: string;
   name: string;
+  firstImage: string;
   gallery: Gallery[];
   rating: number;
   type: string;

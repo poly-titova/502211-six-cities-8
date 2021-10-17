@@ -78,7 +78,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
                   const keyValue = `${id}`;
                   return (
                     <li key={keyValue} className="property__inside-item">
-                      {item}
+                      {item.item}
                     </li>
                   );
                 })}

@@ -1,10 +1,14 @@
 import ItemPlaceList from '../item-place-list/item-place-list';
+import { Offers } from '../../types/offer';
 
 type MainScreenProps = {
   offersCount: number;
+  offers: Offers;
 };
 
-function MainScreen({ offersCount }: MainScreenProps): JSX.Element {
+function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
+  const href = '#';
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -12,32 +16,32 @@ function MainScreen({ offersCount }: MainScreenProps): JSX.Element {
         <section className="locations container">
           <ul className="locations__list tabs__list">
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
+              <a className="locations__item-link tabs__item" href={href}>
                 <span>Paris</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
+              <a className="locations__item-link tabs__item" href={href}>
                 <span>Cologne</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
+              <a className="locations__item-link tabs__item" href={href}>
                 <span>Brussels</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item tabs__item--active">
+              <a className="locations__item-link tabs__item tabs__item--active" href={href}>
                 <span>Amsterdam</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
+              <a className="locations__item-link tabs__item" href={href}>
                 <span>Hamburg</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
+              <a className="locations__item-link tabs__item" href={href}>
                 <span>Dusseldorf</span>
               </a>
             </li>
@@ -71,15 +75,12 @@ function MainScreen({ offersCount }: MainScreenProps): JSX.Element {
 
             <div className="cities__places-list places__list tabs__content">
               <div className="cities__places-list places__list tabs__content">
-                {
-                  Array(offersCount)
-                    .fill(null)
-                    .map(
-                      (_, ix) => (
-                        <ItemPlaceList key={ix.toString()} />
-                      ),
-                    )
-                }
+                {offers.map((item, id) => {
+                  const keyValue = `${id}`;
+                  return (
+                    <ItemPlaceList key={keyValue} offer={item} />
+                  );
+                })}
               </div>
             </div>
           </section>
