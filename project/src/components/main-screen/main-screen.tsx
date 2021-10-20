@@ -1,5 +1,6 @@
 import ItemPlaceList from '../item-place-list/item-place-list';
 import { Offers } from '../../types/offer';
+import { useState } from 'react';
 
 type MainScreenProps = {
   offersCount: number;
@@ -8,6 +9,7 @@ type MainScreenProps = {
 
 function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
   const href = '#';
+  const [setActiveOffer] = useState('');
 
   return (
     <main className="page__main page__main--index">
@@ -78,7 +80,9 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
                 {offers.map((item, id) => {
                   const keyValue = `${id}`;
                   return (
-                    <ItemPlaceList key={keyValue} offer={item} />
+                    <button key={keyValue} onMouseOver={() => { setActiveOffer(keyValue); }}>
+                      <ItemPlaceList key={keyValue} offer={item} />
+                    </button>
                   );
                 })}
               </div>

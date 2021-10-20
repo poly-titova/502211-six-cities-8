@@ -1,4 +1,6 @@
 import { Offer } from '../../types/offer';
+import { useHistory } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type ItemPlaceListProps = {
   offer: Offer;
@@ -7,6 +9,7 @@ type ItemPlaceListProps = {
 function ItemPlaceList(props: ItemPlaceListProps): JSX.Element {
   const href = '#';
   const { offer } = props;
+  const history = useHistory();
 
   return (
     <article className="cities__place-card place-card">
@@ -43,7 +46,7 @@ function ItemPlaceList(props: ItemPlaceListProps): JSX.Element {
         </div>
 
         <h2 className="place-card__name">
-          <a href={href}>{offer.name}</a>
+          <a onClick={() => history.push(AppRoute.Room)}>{offer.name}</a>
         </h2>
 
         <p className="place-card__type">{offer.type}</p>
