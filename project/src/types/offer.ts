@@ -1,4 +1,5 @@
 export type Offer = {
+  id: number;
   mark: string;
   name: string;
   firstImage: string;

@@ -14,7 +14,6 @@ type AppScreenProps = {
 }
 
 function App({ offersCount, offers }: AppScreenProps): JSX.Element {
-  const [firstOffer] = offers;
   return (
     <BrowserRouter>
       <Switch>
@@ -31,8 +30,8 @@ function App({ offersCount, offers }: AppScreenProps): JSX.Element {
           authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.Room}>
-          <RoomScreen offer={firstOffer} />
+        <Route exact path={`${AppRoute.Room}/:id`}>
+          <RoomScreen offers={offers}/>
         </Route>
         <Route>
           <NotFoundScreen />

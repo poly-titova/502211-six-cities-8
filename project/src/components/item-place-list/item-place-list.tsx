@@ -1,18 +1,18 @@
 import { Offer } from '../../types/offer';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type ItemPlaceListProps = {
   offer: Offer;
+  onMouseOver: any;
 };
 
 function ItemPlaceList(props: ItemPlaceListProps): JSX.Element {
   const href = '#';
-  const { offer } = props;
-  const history = useHistory();
+  const { offer, onMouseOver } = props;
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseOver={onMouseOver}>
       <div className="place-card__mark">
         <span>{offer.mark}</span>
       </div>
@@ -46,7 +46,7 @@ function ItemPlaceList(props: ItemPlaceListProps): JSX.Element {
         </div>
 
         <h2 className="place-card__name">
-          <a onClick={() => history.push(AppRoute.Room)}>{offer.name}</a>
+          <Link to={`${AppRoute.Room}/${offer.id}`}>{offer.name}</Link>
         </h2>
 
         <p className="place-card__type">{offer.type}</p>

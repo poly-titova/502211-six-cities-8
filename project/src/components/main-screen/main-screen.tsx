@@ -80,9 +80,7 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
                 {offers.map((item, id) => {
                   const keyValue = `${id}`;
                   return (
-                    <button key={keyValue} onMouseOver={() => { setActiveOffer(keyValue); }}>
-                      <ItemPlaceList key={keyValue} offer={item} />
-                    </button>
+                    <ItemPlaceList key={keyValue} offer={item} onMouseOver={() => { setActiveOffer(keyValue); }} />
                   );
                 })}
               </div>

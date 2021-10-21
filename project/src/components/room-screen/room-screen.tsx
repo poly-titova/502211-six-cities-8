@@ -1,13 +1,16 @@
 import { Offer } from '../../types/offer';
 import FormComment from '../form-comment/form-comment';
+import { useParams } from 'react-router-dom';
 
 type RoomScreenProps = {
-  offer: Offer;
+  offers: Offer;
 };
 
 function RoomScreen(props: RoomScreenProps): JSX.Element {
   const href = '#';
-  const { offer } = props;
+  const { offers } = props;
+  const { id } = useParams();
+  const offer = offers[id];
 
   return (
     <div>
