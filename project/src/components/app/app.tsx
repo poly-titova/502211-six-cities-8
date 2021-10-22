@@ -6,17 +6,19 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import RoomScreen from '../room-screen/room-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import { Offers } from '../../types/offer';
 
 type AppScreenProps = {
   offersCount: number;
+  offers: Offers;
 }
 
-function App({ offersCount }: AppScreenProps): JSX.Element {
+function App({ offersCount, offers }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <MainScreen offersCount={offersCount} />
+          <MainScreen offersCount={offersCount} offers={offers}/>
         </Route>
         <Route exact path={AppRoute.Login}>
           <SignInScreen />
@@ -24,12 +26,12 @@ function App({ offersCount }: AppScreenProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          render={() => <FavoritesScreen offers={offers} />}
+          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.Room}>
-          <RoomScreen />
+        <Route exact path={`${AppRoute.Room}/:id`}>
+          <RoomScreen offers={offers}/>
         </Route>
         <Route>
           <NotFoundScreen />
