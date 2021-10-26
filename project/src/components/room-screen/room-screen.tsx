@@ -1,24 +1,38 @@
-import { Offer } from '../../types/offer';
+import { Offers } from '../../types/offer';
 import FormComment from '../form-comment/form-comment';
 import { useParams } from 'react-router-dom';
 
 type RoomScreenProps = {
-  offers: Offer;
+  offers: Offers;
 };
 
 function RoomScreen(props: RoomScreenProps): JSX.Element {
   const href = '#';
   const { offers } = props;
-  const { id } = useParams();
-  const offer = offers[id];
+  const { id } = useParams<{id:string}>();
+  const idOffer = numberFromParam(id);
+  const offer = offers[idOffer];
+
+  function numberFromParam(p:string|undefined):number {
+    if(typeof p === 'undefined') {
+      throw new Error('нет Offer-а в параметрах');
+    }
+
+    const result = parseInt(p, 10);
+    if(Number.isFinite(result)){
+      return result;
+    } else {
+      throw new Error('не число...');
+    }
+  }
 
   return (
     <div>
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            {offer.gallery.map((item, id) => {
-              const keyValue = `${id}`;
+            {offer.gallery.map((item, idGallery) => {
+              const keyValue = `${idGallery}`;
               return (
                 <div key={keyValue} className="property__image-wrapper">
                   <img className="property__image" src={item.src} alt={item.alt} />
@@ -78,8 +92,8 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
               <h2 className="property__inside-title">What&apos;s inside</h2>
 
               <ul className="property__inside-list">
-                {offer.insideList.map((item, id) => {
-                  const keyValue = `${id}`;
+                {offer.insideList.map((item, idList) => {
+                  const keyValue = `${idList}`;
                   return (
                     <li key={keyValue} className="property__inside-item">
                       {item.item}
@@ -115,31 +129,36 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
               <ul className="reviews__list">
-                <li className="reviews__item">
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img className="reviews__avatar user__avatar" src='img/avatar-max.jpg' width="54" height="54" alt="Reviews avatar" />
-                    </div>
+                {offer.review.map((item, idReview) => {
+                  const keyValue = `${idReview}`;
+                  return (
+                    <li key={keyValue} className="reviews__item">
+                      <div className="reviews__user user">
+                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                          <img className="reviews__avatar user__avatar" src={item.userAvatar} width="54" height="54" alt="Reviews avatar" />
+                        </div>
 
-                    <span className="reviews__user-name">
-                      Max
-                    </span>
-                  </div>
-
-                  <div className="reviews__info">
-                    <div className="reviews__rating rating">
-                      <div className="reviews__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
+                        <span className="reviews__user-name">
+                          {item.userName}
+                        </span>
                       </div>
-                    </div>
 
-                    <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                    </p>
-                    <time className="reviews__time" dateTime="2019-04-24">24 April</time>
-                  </div>
-                </li>
+                      <div className="reviews__info">
+                        <div className="reviews__rating rating">
+                          <div className="reviews__stars rating__stars">
+                            <span style={{ width: `${item.rating}` }}></span>
+                            <span className="visually-hidden">Rating</span>
+                          </div>
+                        </div>
+
+                        <p className="reviews__text">
+                          {item.text}
+                        </p>
+                        <time className="reviews__time" dateTime={item.dateAdd}>{item.dateAdd}</time>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
 
               <FormComment />

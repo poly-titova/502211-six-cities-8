@@ -9,7 +9,7 @@ type MainScreenProps = {
 
 function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
   const href = '#';
-  const [setActiveOffer] = useState('');
+  const [state, setState] = useState({ value: '' });
 
   return (
     <main className="page__main page__main--index">
@@ -80,7 +80,7 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
                 {offers.map((item, id) => {
                   const keyValue = `${id}`;
                   return (
-                    <ItemPlaceList key={keyValue} offer={item} onMouseOver={() => { setActiveOffer(keyValue); }} />
+                    <ItemPlaceList key={keyValue} offer={item} onMouseOver={() => { setState({ ...state, value: keyValue }); }} />
                   );
                 })}
               </div>
