@@ -63,10 +63,8 @@ export const offers: Offers = [
       text: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
       dateAdd: '2019-04-24',
     }],
-    location: [{
-      lat: 52.3909553943508,
-      lng: 4.85309666406198,
-    }],
+    lat: 52.3909553943508,
+    lng: 4.85309666406198,
   },
   {
     id: 1,
@@ -127,10 +125,8 @@ export const offers: Offers = [
       text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
       dateAdd: '2019-11-08',
     }],
-    location: [{
-      lat: 52.369553943508,
-      lng: 4.85309666406198,
-    }],
+    lat: 52.369553943508,
+    lng: 4.85309666406198,
   },
   {
     id: 2,
@@ -202,10 +198,8 @@ export const offers: Offers = [
       text: 'Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure.',
       dateAdd: '2019-03-27',
     }],
-    location: [{
-      lat: 52.3909553943508,
-      lng: 4.929309666406198,
-    }],
+    lat: 52.3909553943508,
+    lng: 4.929309666406198,
   },
   {
     id: 3,
@@ -282,9 +276,7 @@ export const offers: Offers = [
       text: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
       dateAdd: '2019-09-17',
     }],
-    location: [{
-      lat: 52.3809553943508,
-      lng: 4.939309666406198,
-    }],
+    lat: 52.3809553943508,
+    lng: 4.939309666406198,
   },
 ];

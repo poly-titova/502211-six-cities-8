@@ -16,7 +16,8 @@ export type Offer = {
   userStatus: string;
   text: string;
   review: Review[];
-  location: Location[];
+  lat: number;
+  lng: number;
 };
 
 export type Gallery = {
@@ -34,11 +35,6 @@ export type Review = {
   rating: string;
   text: string;
   dateAdd: string;
-};
-
-export type Location = {
-  lat: number;
-  lng: number;
 };
 
 export type Offers = Offer[];
