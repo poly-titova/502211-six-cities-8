@@ -1,15 +1,19 @@
-import ItemPlaceList from '../item-place-list/item-place-list';
-import { Offers } from '../../types/offer';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import PlaceList from '../place-list/place-list';
+import Map from '../map/map';
+import { Offer, Offers } from '../../types/offer';
 
 type MainScreenProps = {
-  offersCount: number;
   offers: Offers;
 };
 
-function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
+function MainScreen({ offers }: MainScreenProps): JSX.Element {
   const href = '#';
-  const [state, setState] = useState({ value: '' });
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+  const onListItemHover = (listItemName: string) => {
+    const currentPoint = offers.find((offer) => offer.name === listItemName);
+    setSelectedPoint(currentPoint);
+  };
 
   return (
     <main className="page__main page__main--index">
@@ -76,19 +80,14 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
             </form>
 
             <div className="cities__places-list places__list tabs__content">
-              <div className="cities__places-list places__list tabs__content">
-                {offers.map((item, id) => {
-                  const keyValue = `${id}`;
-                  return (
-                    <ItemPlaceList key={keyValue} offer={item} onMouseOver={() => { setState({ ...state, value: keyValue }); }} />
-                  );
-                })}
-              </div>
+              <PlaceList points={offers} onListItemHover={onListItemHover} />
             </div>
           </section>
 
           <div className="cities__right-section">
-            <section className="cities__map map" />
+            <section className="cities__map map">
+              <Map city={offers[0]} points={offers} selectedPoint={selectedPoint} />
+            </section>
           </div>
         </div>
       </div>
