@@ -15,6 +15,9 @@ export type Offer = {
   userName: string;
   userStatus: string;
   text: string;
+  review: Review[];
+  lat: number;
+  lng: number;
 };
 
 export type Gallery = {
@@ -24,6 +27,14 @@ export type Gallery = {
 
 export type InsideList = {
   item: string;
+};
+
+export type Review = {
+  userAvatar: string;
+  userName: string;
+  rating: string;
+  text: string;
+  dateAdd: string;
 };
 
 export type Offers = Offer[];
