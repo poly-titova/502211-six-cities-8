@@ -1,3 +1,5 @@
+import { Review } from './review';
+
 export type Offer = {
   id: number;
   mark: string;
@@ -27,14 +29,6 @@ export type Gallery = {
 
 export type InsideList = {
   item: string;
-};
-
-export type Review = {
-  userAvatar: string;
-  userName: string;
-  rating: string;
-  text: string;
-  dateAdd: string;
 };
 
 export type Offers = Offer[];

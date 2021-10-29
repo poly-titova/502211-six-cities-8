@@ -1,6 +1,7 @@
-import { Offers } from '../../types/offer';
-import FormComment from '../form-comment/form-comment';
 import { useParams } from 'react-router-dom';
+import FormComment from '../form-comment/form-comment';
+import ReviewsList from '../reviews-list/reviews-list';
+import { Offers } from '../../types/offer';
 
 type RoomScreenProps = {
   offers: Offers;
@@ -127,40 +128,8 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
             </div>
 
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                {offer.review.map((item, idReview) => {
-                  const keyValue = `${idReview}`;
-                  return (
-                    <li key={keyValue} className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img className="reviews__avatar user__avatar" src={item.userAvatar} width="54" height="54" alt="Reviews avatar" />
-                        </div>
-
-                        <span className="reviews__user-name">
-                          {item.userName}
-                        </span>
-                      </div>
-
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span style={{ width: `${item.rating}` }}></span>
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-
-                        <p className="reviews__text">
-                          {item.text}
-                        </p>
-                        <time className="reviews__time" dateTime={item.dateAdd}>{item.dateAdd}</time>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offer.review.length}</span></h2>
+              <ReviewsList reviews={offer.review}/>
               <FormComment />
 
             </section>
