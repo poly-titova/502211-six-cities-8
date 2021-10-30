@@ -1,8 +1,10 @@
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormComment from '../form-comment/form-comment';
 import ReviewsList from '../reviews-list/reviews-list';
 import NearPlacesList from '../near-places-list/near-places-list';
-import { Offers } from '../../types/offer';
+import Map from '../map/map';
+import { Offer, Offers } from '../../types/offer';
 
 type RoomScreenProps = {
   offers: Offers;
@@ -26,6 +28,12 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
       throw new Error('не число...');
     }
   }
+
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+  const onListItemHover = (listItemName: string) => {
+    const currentPoint = offers.find((item) => item.name === listItemName);
+    setSelectedPoint(currentPoint);
+  };
 
   const nearPlaces = [...offers.slice(0, idOffer), ...offers.slice(idOffer + 1)];
 
@@ -137,7 +145,9 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
             </section>
           </div>
         </div>
-        <section className="property__map map"></section>
+        <section className="property__map map">
+          <Map city={nearPlaces[0]} points={nearPlaces} selectedPoint={selectedPoint} />
+        </section>
       </section>
 
       <div className="container">
