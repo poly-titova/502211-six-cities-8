@@ -20,7 +20,7 @@ function NearPlacesList(props: NearPlacesListProps): JSX.Element {
       {points.map((point, index) => {
         const keyValue = `${index}`;
         return (
-          <NearPlacesItem key={keyValue} keyValue={keyValue} place={point} listItemHoverHandler={listItemHoverHandler} />
+          <NearPlacesItem key={keyValue} place={point} listItemHoverHandler={listItemHoverHandler} />
         );
       })}
     </div>
