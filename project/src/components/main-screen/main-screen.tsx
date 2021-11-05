@@ -1,13 +1,34 @@
 import React, { useState } from 'react';
+import { Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { changeCity } from '../../store/action';
 import PlaceList from '../place-list/place-list';
 import Map from '../map/map';
 import { Offer, Offers } from '../../types/offer';
+import { State } from '../../types/state';
+import { Actions } from '../../types/action';
 
 type MainScreenProps = {
   offers: Offers;
 };
 
-function MainScreen({ offers }: MainScreenProps): JSX.Element {
+const mapStateToProps = ({ city }: State) => ({
+  city,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onCurrentCity() {
+    dispatch(changeCity());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
+
+function MainScreen(props: ConnectedComponentProps): JSX.Element {
+  const { offers, city, onCurrentCity } = props;
   const href = '#';
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
@@ -22,32 +43,32 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
         <section className="locations container">
           <ul className="locations__list tabs__list">
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href={href}>
+              <a className="locations__item-link tabs__item" href={href} onClick={() => { onCurrentCity(); }}>
                 <span>Paris</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href={href}>
+              <a className="locations__item-link tabs__item" href={href} onClick={() => { onCurrentCity(); }}>
                 <span>Cologne</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href={href}>
+              <a className="locations__item-link tabs__item" href={href} onClick={() => { onCurrentCity(); }}>
                 <span>Brussels</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item tabs__item--active" href={href}>
+              <a className="locations__item-link tabs__item tabs__item--active" href={href} onClick={() => { onCurrentCity(); }}>
                 <span>Amsterdam</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href={href}>
+              <a className="locations__item-link tabs__item" href={href} onClick={() => { onCurrentCity(); }}>
                 <span>Hamburg</span>
               </a>
             </li>
             <li className="locations__item">
-              <a className="locations__item-link tabs__item" href={href}>
+              <a className="locations__item-link tabs__item" href={href} onClick={() => { onCurrentCity(); }}>
                 <span>Dusseldorf</span>
               </a>
             </li>
@@ -95,4 +116,5 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
   );
 }
 
-export default MainScreen;
+export { MainScreen };
+export default connector(MainScreen);
