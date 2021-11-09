@@ -3,9 +3,11 @@ import { Offers } from '../../types/offer';
 
 type CitiesListProps = {
   offers: Offers;
+  activeCity: string;
+  onCity: (city: string) => void;
 };
 
-function CitiesList({ offers }: CitiesListProps): JSX.Element {
+function CitiesList({ offers, activeCity, onCity }: CitiesListProps): JSX.Element {
   const cities:any = [];
   const result:any = [];
 
@@ -24,7 +26,7 @@ function CitiesList({ offers }: CitiesListProps): JSX.Element {
       {result.map((item:string) => {
         const keyValue = `${item}`;
         return (
-          <CitiesItem key={keyValue} city={item} />
+          <CitiesItem key={keyValue} city={item} activeCity={activeCity} onCity={onCity} />
         );
       })}
     </ul>

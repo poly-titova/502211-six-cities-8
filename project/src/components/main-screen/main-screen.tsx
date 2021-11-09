@@ -1,15 +1,35 @@
 import React, { useState } from 'react';
+import { Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { changeCity } from '../../store/action';
 import PlaceList from '../place-list/place-list';
 import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
 import { Offer, Offers } from '../../types/offer';
+import { Actions } from '../../types/action';
+import { State } from '../../types/state';
 
 type MainScreenProps = {
   offers: Offers;
 };
 
-function MainScreen(props: MainScreenProps): JSX.Element {
-  const { offers } = props;
+const mapStateToProps = ({ city }: State) => ({
+  city,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onCurrentCity(city: string) {
+    dispatch(changeCity(city));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
+
+function MainScreen(props: ConnectedComponentProps): JSX.Element {
+  const { offers, city, onCurrentCity } = props;
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
     const currentPoint = offers.find((offer) => offer.name === listItemName);
@@ -21,7 +41,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <CitiesList offers={offers} />
+          <CitiesList offers={offers} activeCity={city} onCity={onCurrentCity}/>
         </section>
       </div>
 
@@ -65,4 +85,5 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   );
 }
 
-export default MainScreen;
+export { MainScreen };
+export default connector(MainScreen);
