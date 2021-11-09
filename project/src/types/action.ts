@@ -1,5 +1,6 @@
 export enum ActionType {
   ChangeCity = 'main/changeCity',
+  FillingListOffers = 'main/fillingListOffers',
 }
 
 export type ChangeCity = {
@@ -7,4 +8,8 @@ export type ChangeCity = {
   payload: string;
 };
 
-export type Actions = ChangeCity;
+export type FillingListOffers = {
+  type: ActionType.FillingListOffers;
+};
+
+export type Actions = ChangeCity | FillingListOffers;

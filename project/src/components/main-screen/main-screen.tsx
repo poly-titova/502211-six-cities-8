@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { changeCity } from '../../store/action';
+import { changeCity, fillingListOffers } from '../../store/action';
 import PlaceList from '../place-list/place-list';
 import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
@@ -13,13 +13,15 @@ type MainScreenProps = {
   offers: Offers;
 };
 
-const mapStateToProps = ({ city }: State) => ({
+const mapStateToProps = ({ city, listOffers }: State) => ({
   city,
+  listOffers,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onCurrentCity(city: string) {
     dispatch(changeCity(city));
+    dispatch(fillingListOffers());
   },
 });
 
@@ -29,7 +31,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
 function MainScreen(props: ConnectedComponentProps): JSX.Element {
-  const { offers, city, onCurrentCity } = props;
+  const { offers, city, listOffers, onCurrentCity } = props;
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
     const currentPoint = offers.find((offer) => offer.name === listItemName);
@@ -49,7 +51,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">312 places to stay in Amsterdam</b>
+            <b className="places__found">{listOffers.length} places to stay in {city}</b>
 
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
@@ -70,13 +72,13 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
             </form>
 
             <div className="cities__places-list places__list tabs__content">
-              <PlaceList points={offers} onListItemHover={onListItemHover} />
+              <PlaceList points={listOffers} onListItemHover={onListItemHover} />
             </div>
           </section>
 
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map city={offers[0]} points={offers} selectedPoint={selectedPoint} />
+              <Map city={listOffers[0]} points={listOffers} selectedPoint={selectedPoint} />
             </section>
           </div>
         </div>
