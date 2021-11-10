@@ -2,6 +2,7 @@ import { Review } from './review';
 
 export type Offer = {
   id: number;
+  city: string;
   mark: string;
   name: string;
   firstImage: string;

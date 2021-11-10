@@ -5,14 +5,13 @@ import { Offer } from '../../types/offer';
 
 type NearPlacesItemProps = {
   place: Offer;
-  keyValue: string;
   listItemHoverHandler: (event: MouseEvent<HTMLLIElement>) => void;
 };
 
-function NearPlacesItem({ place, keyValue, listItemHoverHandler }: NearPlacesItemProps): JSX.Element {
+function NearPlacesItem({ place, listItemHoverHandler }: NearPlacesItemProps): JSX.Element {
   const href = '#';
   return (
-    <article className="cities__place-card place-card" key={keyValue} onMouseEnter={listItemHoverHandler}>
+    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
       <div className="place-card__mark">
         <span>{place.mark}</span>
       </div>

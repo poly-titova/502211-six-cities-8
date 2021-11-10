@@ -2,12 +2,11 @@ import { Review } from '../../types/review';
 
 type ReviewsItemProps = {
   review: Review;
-  keyValue: string;
 };
 
-function ReviewsItem({ keyValue, review }: ReviewsItemProps): JSX.Element {
+function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
   return (
-    <li key={keyValue} className="reviews__item">
+    <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img className="reviews__avatar user__avatar" src={review.userAvatar} width="54" height="54" alt="Reviews avatar" />
