@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { changeCity, fillingListOffers } from '../../store/action';
+import { changeCity, changeSort, fillingListOffers } from '../../store/action';
+import SortingOptions from '../sorting-options/sorting-options';
 import PlaceList from '../place-list/place-list';
 import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
@@ -13,15 +14,19 @@ type MainScreenProps = {
   offers: Offers;
 };
 
-const mapStateToProps = ({ city, listOffers }: State) => ({
+const mapStateToProps = ({ city, listOffers, sortIn }: State) => ({
   city,
   listOffers,
+  sortIn,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onCurrentCity(city: string) {
     dispatch(changeCity(city));
     dispatch(fillingListOffers());
+  },
+  onChangeSort() {
+    dispatch(changeSort());
   },
 });
 
@@ -31,7 +36,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
 function MainScreen(props: ConnectedComponentProps): JSX.Element {
-  const { offers, city, listOffers, onCurrentCity } = props;
+  const { offers, city, listOffers, sortIn, onCurrentCity, onChangeSort } = props;
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
     const currentPoint = offers.find((offer) => offer.name === listItemName);
@@ -53,23 +58,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{listOffers.length} places to stay in {city}</b>
 
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
-
-              <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select" />
-                </svg>
-              </span>
-
-              <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                <li className="places__option" tabIndex={0}>Price: low to high</li>
-                <li className="places__option" tabIndex={0}>Price: high to low</li>
-                <li className="places__option" tabIndex={0}>Top rated first</li>
-              </ul>
-            </form>
+            <SortingOptions sortIn={sortIn} onChangeSort={onChangeSort}/>
 
             <div className="cities__places-list places__list tabs__content">
               <PlaceList points={listOffers} onListItemHover={onListItemHover} />

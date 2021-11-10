@@ -1,4 +1,4 @@
-import { ActionType, ChangeCity, FillingListOffers } from '../types/action';
+import { ActionType, ChangeCity, FillingListOffers, ChangeSort } from '../types/action';
 
 export const changeCity = (city: string): ChangeCity => ({
   type: ActionType.ChangeCity,
@@ -7,4 +7,8 @@ export const changeCity = (city: string): ChangeCity => ({
 
 export const fillingListOffers = (): FillingListOffers => ({
   type: ActionType.FillingListOffers,
+});
+
+export const changeSort = (): ChangeSort => ({
+  type: ActionType.ChangeSort,
 });

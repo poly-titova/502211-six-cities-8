@@ -1,6 +1,7 @@
 export enum ActionType {
   ChangeCity = 'main/changeCity',
   FillingListOffers = 'main/fillingListOffers',
+  ChangeSort = 'main/changeSort',
 }
 
 export type ChangeCity = {
@@ -12,4 +13,8 @@ export type FillingListOffers = {
   type: ActionType.FillingListOffers;
 };
 
-export type Actions = ChangeCity | FillingListOffers;
+export type ChangeSort = {
+  type: ActionType.ChangeSort;
+};
+
+export type Actions = ChangeCity | FillingListOffers | ChangeSort;

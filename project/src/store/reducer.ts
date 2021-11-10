@@ -5,6 +5,7 @@ import { offers } from '../mocks/offers';
 const initialState = {
   city: 'Paris',
   listOffers: offers.filter((offer) => offer.city === 'Paris'),
+  sortIn: false,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -13,6 +14,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, city: action.payload };
     case ActionType.FillingListOffers:
       return { ...state, listOffers: offers.filter((offer) => offer.city === state.city) };
+    case ActionType.ChangeSort:
+      return { ...state, sortIn: !state.sortIn };
     default:
       return state;
   }
