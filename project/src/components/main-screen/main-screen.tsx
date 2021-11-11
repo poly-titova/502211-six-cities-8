@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { changeCity, changeSort, fillingListOffers } from '../../store/action';
+import { changeCity, changeSort, fillingListOffers, changeSortOrder, changeListOffersBySort } from '../../store/action';
 import SortingOptions from '../sorting-options/sorting-options';
 import PlaceList from '../place-list/place-list';
 import CitiesList from '../cities-list/cities-list';
@@ -14,10 +14,11 @@ type MainScreenProps = {
   offers: Offers;
 };
 
-const mapStateToProps = ({ city, listOffers, sortIn }: State) => ({
+const mapStateToProps = ({ city, listOffers, sortIn, sortOrder }: State) => ({
   city,
   listOffers,
   sortIn,
+  sortOrder,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -28,6 +29,10 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onChangeSort() {
     dispatch(changeSort());
   },
+  onChangeListSort(sortOrder: string) {
+    dispatch(changeSortOrder(sortOrder));
+    dispatch(changeListOffersBySort());
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -36,7 +41,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
 function MainScreen(props: ConnectedComponentProps): JSX.Element {
-  const { offers, city, listOffers, sortIn, onCurrentCity, onChangeSort } = props;
+  const { offers, city, listOffers, sortIn, sortOrder, onCurrentCity, onChangeSort, onChangeListSort } = props;
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
     const currentPoint = offers.find((offer) => offer.name === listItemName);
@@ -48,7 +53,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <CitiesList offers={offers} activeCity={city} onCity={onCurrentCity}/>
+          <CitiesList offers={offers} activeCity={city} onCity={onCurrentCity} />
         </section>
       </div>
 
@@ -58,7 +63,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{listOffers.length} places to stay in {city}</b>
 
-            <SortingOptions sortIn={sortIn} onChangeSort={onChangeSort}/>
+            <SortingOptions sortIn={sortIn} sortOrder={sortOrder} onChangeSort={onChangeSort} onChangeListSort={onChangeListSort} />
 
             <div className="cities__places-list places__list tabs__content">
               <PlaceList points={listOffers} onListItemHover={onListItemHover} />
