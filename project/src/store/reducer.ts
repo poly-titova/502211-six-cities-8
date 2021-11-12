@@ -4,6 +4,7 @@ import { State } from '../types/state';
 import { offers } from '../mocks/offers';
 
 const initialState = {
+  offers,
   city: 'Paris',
   listOffers: offers.filter((offer) => offer.city === 'Paris'),
   sortIn: false,
@@ -38,6 +39,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       }
 
       return { ...state, listOffers: state.listOffers };
+    case ActionType.LoadOffers:
+      return { ...state, offers };
     default:
       return state;
   }
