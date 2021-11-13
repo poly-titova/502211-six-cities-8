@@ -1,4 +1,5 @@
-import { ActionType, ChangeCity, FillingListOffers, ChangeSort, ChangeSortOrder, ChangeListOffersBySort } from '../types/action';
+import { ActionType, ChangeCity, FillingListOffers, ChangeSort, ChangeSortOrder, ChangeListOffersBySort, LoadOffers, RequireAuthorization, RequireLogout } from '../types/action';
+import { AuthorizationStatus } from '../const';
 import { Offers } from '../types/offer';
 
 export const changeCity = (city: string): ChangeCity => ({
@@ -23,9 +24,16 @@ export const changeListOffersBySort = (): ChangeListOffersBySort => ({
   type: ActionType.ChangeListOffersBySort,
 });
 
-export const loadOffers = (offers: Offers) => ({
+export const loadOffers = (offers: Offers): LoadOffers => ({
   type: ActionType.LoadOffers,
-  payload: {
-    offers,
-  },
+  payload: offers,
+});
+
+export const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorization => ({
+  type: ActionType.RequireAuthorization,
+  payload: authStatus,
+});
+
+export const requireLogout = (): RequireLogout => ({
+  type: ActionType.RequireLogout,
 });

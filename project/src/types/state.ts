@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../const';
 import { Offers } from './offer';
 
 export type State = {
@@ -5,5 +6,6 @@ export type State = {
   city: string,
   listOffers: Offers,
   sortIn: boolean,
-  sortOrder: string
+  sortOrder: string,
+  authorizationStatus: AuthorizationStatus,
 };

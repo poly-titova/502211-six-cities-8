@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../const';
 import { Offers } from './offer';
 
 export enum ActionType {
@@ -7,6 +8,8 @@ export enum ActionType {
   ChangeSortOrder = 'main/changeSortOrder',
   ChangeListOffersBySort = 'main/changeListOffersBySort',
   LoadOffers = 'data/loadOffers',
+  RequireAuthorization = 'user/requireAuthorization',
+  RequireLogout = 'user/requireLogout',
 }
 
 export type ChangeCity = {
@@ -36,4 +39,13 @@ export type LoadOffers = {
   payload: Offers;
 };
 
-export type Actions = ChangeCity | FillingListOffers | ChangeSort | ChangeSortOrder | ChangeListOffersBySort | LoadOffers;
+export type RequireAuthorization = {
+  type: ActionType.RequireAuthorization;
+  payload: AuthorizationStatus;
+};
+
+export type RequireLogout = {
+  type: ActionType.RequireLogout;
+};
+
+export type Actions = ChangeCity | FillingListOffers | ChangeSort | ChangeSortOrder | ChangeListOffersBySort | LoadOffers | RequireAuthorization | RequireLogout;
