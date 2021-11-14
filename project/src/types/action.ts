@@ -1,5 +1,8 @@
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { AxiosInstance } from 'axios';
 import { AuthorizationStatus } from '../const';
 import { Offers } from './offer';
+import { State } from './state';
 
 export enum ActionType {
   ChangeCity = 'main/changeCity',
@@ -49,3 +52,7 @@ export type RequireLogout = {
 };
 
 export type Actions = ChangeCity | FillingListOffers | ChangeSort | ChangeSortOrder | ChangeListOffersBySort | LoadOffers | RequireAuthorization | RequireLogout;
+
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>
+
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

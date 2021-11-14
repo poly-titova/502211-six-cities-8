@@ -5,6 +5,12 @@ export enum AppRoute {
   Room = '/rooms'
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

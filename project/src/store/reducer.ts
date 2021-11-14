@@ -5,7 +5,7 @@ import { offers } from '../mocks/offers';
 import { AuthorizationStatus } from '../const';
 
 const initialState = {
-  offers,
+  offers: [],
   city: 'Paris',
   listOffers: offers.filter((offer) => offer.city === 'Paris'),
   sortIn: false,
