@@ -11,6 +11,7 @@ const initialState = {
   sortIn: false,
   sortOrder: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -23,28 +24,28 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, sortIn: !state.sortIn };
     case ActionType.ChangeSortOrder:
       return { ...state, sortOrder: action.payload };
-      case ActionType.ChangeListOffersBySort:
-        if (state.sortOrder === 'Popular') {
-          return { ...state, listOffers: offers.filter((offer) => offer.city === state.city) };
-        }
-  
-        if (state.sortOrder === 'Price: low to high') {
-          return { ...state, listOffers: state.listOffers.sort((a: Offer, b: Offer) => a.priceValue - b.priceValue) };
-        }
-  
-        if (state.sortOrder === 'Price: high to low') {
-          return { ...state, listOffers: state.listOffers.sort((a: Offer, b: Offer) => b.priceValue - a.priceValue) };
-        }
-  
-        if (state.sortOrder === 'Top rated first') {
-          return { ...state, listOffers: state.listOffers.sort((a: Offer, b: Offer) => b.rating - a.rating) };
-        }
-  
-        return { ...state, listOffers: state.listOffers };
-      case ActionType.LoadOffers:
+    case ActionType.ChangeListOffersBySort:
+      if (state.sortOrder === 'Popular') {
+        return { ...state, listOffers: offers.filter((offer) => offer.city === state.city) };
+      }
+
+      if (state.sortOrder === 'Price: low to high') {
+        return { ...state, listOffers: state.listOffers.sort((a: Offer, b: Offer) => a.priceValue - b.priceValue) };
+      }
+
+      if (state.sortOrder === 'Price: high to low') {
+        return { ...state, listOffers: state.listOffers.sort((a: Offer, b: Offer) => b.priceValue - a.priceValue) };
+      }
+
+      if (state.sortOrder === 'Top rated first') {
+        return { ...state, listOffers: state.listOffers.sort((a: Offer, b: Offer) => b.rating - a.rating) };
+      }
+
+      return { ...state, listOffers: state.listOffers };
+    case ActionType.LoadOffers:
       return { ...state, offers };
     case ActionType.RequireAuthorization:
-      return { ...state, authorizationStatus: action.payload };
+      return { ...state, authorizationStatus: action.payload, isDataLoaded: true };
     case ActionType.RequireLogout:
       return { ...state, authorizationStatus: AuthorizationStatus.NoAuth };
     default:

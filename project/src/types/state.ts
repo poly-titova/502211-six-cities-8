@@ -8,4 +8,5 @@ export type State = {
   sortIn: boolean,
   sortOrder: string,
   authorizationStatus: AuthorizationStatus,
+  isDataLoaded: boolean,
 };
