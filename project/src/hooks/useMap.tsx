@@ -9,10 +9,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Offer): Map 
     if (mapRef.current !== null && map === null) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.lat,
-          lng: city.lng,
+          lat: city.city.location.latitude,
+          lng: city.city.location.longitude,
         },
-        zoom: 10,
+        zoom: city.city.location.zoom,
       });
 
       const layer = new TileLayer(

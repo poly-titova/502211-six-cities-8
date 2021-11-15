@@ -1,14 +1,14 @@
 import { MouseEvent } from 'react';
-import NearPlacesItem from '../near-places-item/near-places-item';
 import { Offers } from '../../types/offer';
+import PlacesItem from '../places-item/places-item';
 
-type NearPlacesListProps = {
-  points: Offers;
+type PlacesListProps = {
+  places: Offers;
   onListItemHover: (listItemName: string) => void;
 };
 
-function NearPlacesList(props: NearPlacesListProps): JSX.Element {
-  const { points, onListItemHover } = props;
+function PlacesList(props: PlacesListProps): JSX.Element {
+  const { places, onListItemHover } = props;
 
   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
@@ -17,14 +17,14 @@ function NearPlacesList(props: NearPlacesListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {points.map((point, index) => {
+      {places.map((place, index) => {
         const keyValue = `${index}`;
         return (
-          <NearPlacesItem key={keyValue} place={point} listItemHoverHandler={listItemHoverHandler} />
+          <PlacesItem key={keyValue} place={place} listItemHoverHandler={listItemHoverHandler}/>
         );
       })}
     </div>
   );
 }
 
-export default NearPlacesList;
+export default PlacesList;
