@@ -6,10 +6,8 @@ import { State } from './state';
 
 export enum ActionType {
   ChangeCity = 'main/changeCity',
-  FillingListOffers = 'main/fillingListOffers',
   ChangeSort = 'main/changeSort',
   ChangeSortOrder = 'main/changeSortOrder',
-  ChangeListOffersBySort = 'main/changeListOffersBySort',
   LoadOffers = 'data/loadOffers',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
@@ -20,10 +18,6 @@ export type ChangeCity = {
   payload: string;
 };
 
-export type FillingListOffers = {
-  type: ActionType.FillingListOffers;
-};
-
 export type ChangeSort = {
   type: ActionType.ChangeSort;
 };
@@ -31,10 +25,6 @@ export type ChangeSort = {
 export type ChangeSortOrder = {
   type: ActionType.ChangeSortOrder;
   payload: string;
-};
-
-export type ChangeListOffersBySort = {
-  type: ActionType.ChangeListOffersBySort;
 };
 
 export type LoadOffers = {
@@ -51,7 +41,7 @@ export type RequireLogout = {
   type: ActionType.RequireLogout;
 };
 
-export type Actions = ChangeCity | FillingListOffers | ChangeSort | ChangeSortOrder | ChangeListOffersBySort | LoadOffers | RequireAuthorization | RequireLogout;
+export type Actions = ChangeCity | ChangeSort | ChangeSortOrder | LoadOffers | RequireAuthorization | RequireLogout;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>
 

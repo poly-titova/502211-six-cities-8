@@ -8,11 +8,11 @@ type CitiesListProps = {
 };
 
 function CitiesList({ offers, activeCity, onCity }: CitiesListProps): JSX.Element {
-  const cities:any = [];
-  const result:any = [];
+  const cities:string[] = [];
+  const result:Array<string> = [];
 
   offers.map((item) => {
-    const cityName = item.city;
+    const cityName = item.city.name;
     cities.push(cityName);
     for (const city of cities) {
       if (!result.includes(city)) {
@@ -23,7 +23,7 @@ function CitiesList({ offers, activeCity, onCity }: CitiesListProps): JSX.Elemen
 
   return (
     <ul className="locations__list tabs__list">
-      {result.map((item:string) => {
+      {result.map((item) => {
         const keyValue = `${item}`;
         return (
           <CitiesItem key={keyValue} city={item} activeCity={activeCity} onCity={onCity} />

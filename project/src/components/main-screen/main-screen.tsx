@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { changeCity, changeSort, fillingListOffers, changeSortOrder, changeListOffersBySort } from '../../store/action';
+import { changeCity, changeSort, changeSortOrder } from '../../store/action';
 import SortingOptions from '../sorting-options/sorting-options';
 import PlaceList from '../place-list/place-list';
 import CitiesList from '../cities-list/cities-list';
@@ -14,9 +14,25 @@ type MainScreenProps = {
   offers: Offers;
 };
 
-const mapStateToProps = ({ city, listOffers, sortIn, sortOrder }: State) => ({
+const compaires:Record<string, ((a: Offer, b:Offer) => number) | undefined> = {
+  'Price: low to high': (a: Offer, b:Offer) => b.price - a.price,
+  'Price: high to low': (a:Offer, b:Offer) => a.price - b.price,
+  'Top rated first': (a:Offer, b:Offer) => a.rating - b.rating,
+};
+
+const makeSort = (offers: Offers, sortOrder: string, city: string) => {
+  const filtred = offers.filter((offer) => offer.city.name === city);
+  const compaire = compaires[sortOrder];
+  if (typeof compaire === 'undefined' || sortOrder === 'Popular') {
+    return filtred;
+  }
+  const sorted = [...filtred].sort(compaire);
+  return sorted;
+};
+
+const mapStateToProps = ({ city, sortIn, sortOrder, offers }: State) => ({
   city,
-  listOffers,
+  listOffers: makeSort(offers, sortOrder, city),
   sortIn,
   sortOrder,
 });
@@ -24,14 +40,12 @@ const mapStateToProps = ({ city, listOffers, sortIn, sortOrder }: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onCurrentCity(city: string) {
     dispatch(changeCity(city));
-    dispatch(fillingListOffers());
   },
   onChangeSort() {
     dispatch(changeSort());
   },
   onChangeListSort(sortOrder: string) {
     dispatch(changeSortOrder(sortOrder));
-    dispatch(changeListOffersBySort());
   },
 });
 
