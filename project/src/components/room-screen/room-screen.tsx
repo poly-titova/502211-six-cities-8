@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormComment from '../form-comment/form-comment';
-import ReviewsList from '../reviews-list/reviews-list';
-import NearPlacesList from '../near-places-list/near-places-list';
+// import ReviewsList from '../reviews/reviews-list/reviews-list';
+import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import { Offer, Offers } from '../../types/offer';
 
@@ -31,22 +31,22 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
-    const currentPoint = offers.find((item) => item.name === listItemName);
+    const currentPoint = offers.find((item) => item.title === listItemName);
     setSelectedPoint(currentPoint);
   };
 
-  const nearPlaces = [...offers.slice(0, idOffer), ...offers.slice(idOffer + 1)];
+  const nearPlaces = [offers[1+idOffer], offers[2+idOffer], offers[3+idOffer]];
 
   return (
     <div>
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            {offer.gallery.map((item, idGallery) => {
-              const keyValue = `${idGallery}`;
+            {offer.images.map((image, idImage) => {
+              const keyValue = `${idImage}`;
               return (
                 <div key={keyValue} className="property__image-wrapper">
-                  <img className="property__image" src={item.src} alt={item.alt} />
+                  <img className="property__image" src={image} alt="Place" />
                 </div>
               );
             })}
@@ -56,12 +56,12 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
         <div className="property__container container">
           <div className="property__wrapper">
             <div className="property__mark">
-              <span>{offer.mark}</span>
+              <span>{offer.is_premium}</span>
             </div>
 
             <div className="property__name-wrapper">
               <h1 className="property__name">
-                {offer.name}
+                {offer.title}
               </h1>
 
               <button className="property__bookmark-button button" type="button">
@@ -74,7 +74,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
 
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{ width: '80%' }} />
+                <span style={{ width: `${offer.rating}` }} />
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="property__rating-value rating__value">{offer.rating}</span>
@@ -90,24 +90,24 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
               </li>
 
               <li className="property__feature property__feature--adults">
-                Max {offer.adults} adults
+                Max {offer.max_adults} adults
               </li>
             </ul>
 
             <div className="property__price">
-              <b className="property__price-value">{offer.priceValue}</b>
-              <span className="property__price-text">{offer.priceText}</span>
+              <b className="property__price-value">{offer.price}</b>
+              <span className="property__price-text">night</span>
             </div>
 
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
 
               <ul className="property__inside-list">
-                {offer.insideList.map((item, idList) => {
-                  const keyValue = `${idList}`;
+                {offer.goods.map((good, idGood) => {
+                  const keyValue = `${idGood}`;
                   return (
                     <li key={keyValue} className="property__inside-item">
-                      {item.item}
+                      {good}
                     </li>
                   );
                 })}
@@ -118,28 +118,27 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="property__avatar user__avatar" src={offer.userAvatar} width="74" height="74" alt="Host avatar" />
+                  <img className="property__avatar user__avatar" src={offer.host.avatar_url} width="74" height="74" alt="Host avatar" />
                 </div>
 
                 <span className="property__user-name">
-                  {offer.userName}
+                  {offer.host.name}
                 </span>
 
                 <span className="property__user-status">
-                  {offer.userStatus}
+                  {offer.host.is_pro}
                 </span>
               </div>
 
               <div className="property__description">
                 <p className="property__text">
-                  {offer.text}
+                  {offer.description}
                 </p>
               </div>
             </div>
 
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offer.review.length}</span></h2>
-              <ReviewsList reviews={offer.review} />
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offer.reviews === undefined ? '0' : offer.reviews.length}</span></h2>
               <FormComment />
 
             </section>
@@ -154,7 +153,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <NearPlacesList points={nearPlaces} onListItemHover={onListItemHover} />
+            <PlacesList places={nearPlaces} onListItemHover={onListItemHover} />
           </div>
         </section>
       </div>

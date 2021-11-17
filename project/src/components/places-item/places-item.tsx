@@ -3,30 +3,30 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offer';
 
-type NearPlacesItemProps = {
+type PlacesItemProps = {
   place: Offer;
   listItemHoverHandler: (event: MouseEvent<HTMLLIElement>) => void;
 };
 
-function NearPlacesItem({ place, listItemHoverHandler }: NearPlacesItemProps): JSX.Element {
+function PlacesItem({ place, listItemHoverHandler }: PlacesItemProps): JSX.Element {
   const href = '#';
   return (
     <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
       <div className="place-card__mark">
-        <span>{place.mark}</span>
+        <span>{place.is_premium}</span>
       </div>
 
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={href}>
-          <img className="place-card__image" src={place.firstImage} width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={place.preview_image} width="260" height="200" alt="Place" />
         </a>
       </div>
 
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{place.priceValue}</b>
-            <span className="place-card__price-text">&#47;&nbsp;{place.priceText}</span>
+            <b className="place-card__price-value">&euro;{place.price}</b>
+            <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
           <button className="place-card__bookmark-button button" type="button">
@@ -39,13 +39,13 @@ function NearPlacesItem({ place, listItemHoverHandler }: NearPlacesItemProps): J
 
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{ width: `${place.rating}` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
 
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${place.id}`}>{place.name}</Link>
+          <Link to={`${AppRoute.Room}/${place.id}`}>{place.title}</Link>
         </h2>
 
         <p className="place-card__type">{place.type}</p>
@@ -54,4 +54,4 @@ function NearPlacesItem({ place, listItemHoverHandler }: NearPlacesItemProps): J
   );
 }
 
-export default NearPlacesItem;
+export default PlacesItem;

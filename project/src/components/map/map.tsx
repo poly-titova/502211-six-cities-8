@@ -31,15 +31,13 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
     if (map) {
       points.forEach((point) => {
         const marker = leaflet.marker({
-          lat: point.lat,
-          lng: point.lng,
+          lat: point.city.location.latitude,
+          lng: point.city.location.longitude,
         });
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.name === selectedPoint.name
-              ? currentCustomIcon
-              : defaultCustomIcon,
+            selectedPoint !== undefined && point.title === selectedPoint.title ? currentCustomIcon : defaultCustomIcon,
           )
           .addTo(map);
       });
