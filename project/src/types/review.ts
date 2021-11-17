@@ -7,8 +7,8 @@ export type Review = {
 };
 
 export type User = {
-  avatar_url: string;
+  ['avatar_url']: string;
   id: number;
-  is_pro: boolean;
+  ['is_pro']: boolean;
   name: string;
 };
