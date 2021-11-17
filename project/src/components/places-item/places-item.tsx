@@ -11,7 +11,7 @@ type PlacesItemProps = {
 function PlacesItem({ place, listItemHoverHandler }: PlacesItemProps): JSX.Element {
   const href = '#';
   return (
-    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
+    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} title={place.title}>
       <div className="place-card__mark">
         <span>{place.is_premium}</span>
       </div>

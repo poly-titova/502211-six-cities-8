@@ -31,8 +31,8 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
     if (map) {
       points.forEach((point) => {
         const marker = leaflet.marker({
-          lat: point.city.location.latitude,
-          lng: point.city.location.longitude,
+          lat: point.location.latitude,
+          lng: point.location.longitude,
         });
 
         marker

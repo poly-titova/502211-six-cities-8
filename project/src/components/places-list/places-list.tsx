@@ -12,7 +12,7 @@ function PlacesList(props: PlacesListProps): JSX.Element {
 
   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
-    onListItemHover(event.currentTarget.innerText);
+    onListItemHover(event.currentTarget.title);
   };
 
   return (
