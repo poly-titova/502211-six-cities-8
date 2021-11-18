@@ -8,11 +8,11 @@ export type Offer = {
   host: Host;
   id: number;
   images: string[];
-  ['is_favorite']: boolean;
-  ['is_premium']: boolean;
+  isFavorite: boolean;
+  isPremium: boolean;
   location: Location;
-  ['max_adults']: number;
-  ['preview_image']: string;
+  maxAdults: number;
+  previewImage: string;
   price: number;
   rating: number;
   title: string;
@@ -32,9 +32,9 @@ export type Location = {
 };
 
 export type Host = {
-  ['avatar_url']: string;
+  avatarUrl: string;
   id: number;
-  ['is_pro']: boolean;
+  isPro: boolean;
   name: string;
 };
 

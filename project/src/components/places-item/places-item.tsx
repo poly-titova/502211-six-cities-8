@@ -13,12 +13,12 @@ function PlacesItem({ place, listItemHoverHandler }: PlacesItemProps): JSX.Eleme
   return (
     <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} title={place.title}>
       <div className="place-card__mark">
-        <span>{place.is_premium}</span>
+        <span>{place.isPremium}</span>
       </div>
 
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={href}>
-          <img className="place-card__image" src={place.preview_image} width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={place.previewImage} width="260" height="200" alt="Place" />
         </a>
       </div>
 

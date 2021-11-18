@@ -56,7 +56,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
         <div className="property__container container">
           <div className="property__wrapper">
             <div className="property__mark">
-              <span>{offer.is_premium}</span>
+              <span>{offer.isPremium}</span>
             </div>
 
             <div className="property__name-wrapper">
@@ -90,7 +90,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
               </li>
 
               <li className="property__feature property__feature--adults">
-                Max {offer.max_adults} adults
+                Max {offer.maxAdults} adults
               </li>
             </ul>
 
@@ -118,7 +118,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="property__avatar user__avatar" src={offer.host.avatar_url} width="74" height="74" alt="Host avatar" />
+                  <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
 
                 <span className="property__user-name">
@@ -126,7 +126,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
                 </span>
 
                 <span className="property__user-status">
-                  {offer.host.is_pro}
+                  {offer.host.isPro}
                 </span>
               </div>
 

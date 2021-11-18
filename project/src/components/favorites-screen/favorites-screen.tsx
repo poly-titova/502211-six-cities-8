@@ -8,7 +8,7 @@ type FavoritesScreenProps = {
 
 function FavoritesScreen({ offers }: FavoritesScreenProps): JSX.Element {
   const href = '#';
-  const favorites = offers.filter((offer) => offer.is_favorite);
+  const favorites = offers.filter((offer) => offer.isFavorite);
 
   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
