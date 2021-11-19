@@ -1,5 +1,5 @@
-import { ActionType, ChangeCity, ChangeSort, ChangeSortOrder, LoadOffers, RequireAuthorization, RequireLogout } from '../types/action';
-import { AuthorizationStatus } from '../const';
+import { ActionType, ChangeCity, ChangeSort, ChangeSortOrder, LoadOffers, RedirectToRoute, RequireAuthorization, RequireLogout } from '../types/action';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { Offers } from '../types/offer';
 
 export const changeCity = (city: string): ChangeCity => ({
@@ -28,4 +28,9 @@ export const requireAuthorization = (authStatus: AuthorizationStatus): RequireAu
 
 export const requireLogout = (): RequireLogout => ({
   type: ActionType.RequireLogout,
+});
+
+export const redirectToRoute = (url: AppRoute): RedirectToRoute => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
 });
