@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { FormEvent } from 'react';
 
 function FormComment(): JSX.Element {
   const href = '#';
   const [state, setState] = useState({ value: '' });
-  const onSubmit = (e:any) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
   return (

@@ -17,8 +17,8 @@ type MainScreenProps = {
 };
 
 const compaires: Record<string, ((a: Offer, b: Offer) => number) | undefined> = {
-  'Price: low to high': (a: Offer, b: Offer) => b.price - a.price,
-  'Price: high to low': (a: Offer, b: Offer) => a.price - b.price,
+  'Price: low to high': (a: Offer, b: Offer) => a.price - b.price,
+  'Price: high to low': (a: Offer, b: Offer) => b.price - a.price,
   'Top rated first': (a: Offer, b: Offer) => a.rating - b.rating,
 };
 
@@ -62,6 +62,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
 function MainScreen(props: ConnectedComponentProps): JSX.Element {
+  const href = '#';
   const { offers, city, listOffers, sortIn, sortOrder, authorizationStatus, userEmail, onCurrentCity, onChangeSort, onChangeListSort, logoutSistem } = props;
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
@@ -77,14 +78,14 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
+              <a className="header__logo-link header__logo-link--active" href={href}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </a>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <a className="header__nav-link header__nav-link--profile" href={href}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">{userEmail}</span>
@@ -139,7 +140,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
             </section>
 
             <div className="cities__right-section">
-              <section className="cities__map map">
+              <section className="map">
                 <Map city={cityFirst} points={listOffers} selectedPoint={selectedPoint} />
               </section>
             </div>

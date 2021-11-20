@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormComment from '../form-comment/form-comment';
 // import ReviewsList from '../reviews/reviews-list/reviews-list';
@@ -29,13 +28,9 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
     }
   }
 
-  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
-  const onListItemHover = (listItemName: string) => {
-    const currentPoint = offers.find((item) => item.title === listItemName);
-    setSelectedPoint(currentPoint);
-  };
-
-  const nearPlaces = [offers[1+idOffer], offers[2+idOffer], offers[3+idOffer]];
+  const sorted = [...offers].sort((a: Offer, b: Offer) => b.location.latitude - a.location.latitude);
+  const nearPlaces = [sorted[idOffer - 1], sorted[idOffer + 1], sorted[idOffer + 2]];
+  const nearPlacesWithCurrentOffer = [sorted[idOffer - 1], sorted[idOffer], sorted[idOffer + 1], sorted[idOffer + 2]];
 
   return (
     <div>
@@ -144,8 +139,8 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
             </section>
           </div>
         </div>
-        <section className="property__map map">
-          <Map city={nearPlaces[0]} points={nearPlaces} selectedPoint={selectedPoint} />
+        <section className="map">
+          <Map city={sorted[idOffer]} points={nearPlacesWithCurrentOffer} selectedPoint={sorted[idOffer]} />
         </section>
       </section>
 
@@ -153,7 +148,7 @@ function RoomScreen(props: RoomScreenProps): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <PlacesList places={nearPlaces} onListItemHover={onListItemHover} />
+            <PlacesList places={nearPlaces} onListItemHover={() => 0} />
           </div>
         </section>
       </div>
