@@ -9,6 +9,7 @@ const initialState = {
   sortOrder: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  userEmail: '',
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -25,6 +26,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, authorizationStatus: action.payload };
     case ActionType.RequireLogout:
       return { ...state, authorizationStatus: AuthorizationStatus.NoAuth };
+    case ActionType.GetEmail:
+      return { ...state, userEmail: action.payload };
     default:
       return state;
   }

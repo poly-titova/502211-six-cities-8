@@ -12,6 +12,7 @@ export enum ActionType {
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   RedirectToRoute = 'main/redirectToRoute',
+  GetEmail = 'login/getEmail',
 }
 
 export type ChangeCity = {
@@ -47,7 +48,12 @@ export type RedirectToRoute = {
   payload: string;
 };
 
-export type Actions = ChangeCity | ChangeSort | ChangeSortOrder | LoadOffers | RequireAuthorization | RequireLogout | RedirectToRoute;
+export type GetEmail = {
+  type: ActionType.GetEmail;
+  payload: string;
+};
+
+export type Actions = ChangeCity | ChangeSort | ChangeSortOrder | LoadOffers | RequireAuthorization | RequireLogout | RedirectToRoute | GetEmail;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>
 

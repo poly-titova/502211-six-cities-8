@@ -1,9 +1,12 @@
 import { ThunkActionResult } from '../types/action';
-import { loadOffers, redirectToRoute, requireAuthorization, requireLogout } from './action';
+import { loadOffers, redirectToRoute, requireAuthorization, requireLogout, getEmail } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
+import { toast } from 'react-toastify';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { adapt } from '../types/types';
 import { AuthData } from '../types/auth-data';
+
+const AUTH_FAIL_MESAGE = 'Не забудьте авторизоваться';
 
 export const fetchOfferAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -13,10 +16,12 @@ export const fetchOfferAction = (): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login)
-      .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      });
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      toast.info(AUTH_FAIL_MESAGE);
+    }
   };
 
 export const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>
@@ -24,6 +29,7 @@ export const loginAction = ({ login: email, password }: AuthData): ThunkActionRe
     const { data: { token } } = await api.post<{ token: Token }>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(getEmail(email));
     dispatch(redirectToRoute(AppRoute.Root));
   };
 
@@ -31,5 +37,7 @@ export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     api.delete(APIRoute.Logout);
     dropToken();
+    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(getEmail(''));
     dispatch(requireLogout());
   };
