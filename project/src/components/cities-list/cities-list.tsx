@@ -7,19 +7,10 @@ type CitiesListProps = {
   onCity: (city: string) => void;
 };
 
-function CitiesList({ offers, activeCity, onCity }: CitiesListProps): JSX.Element {
-  const cities:string[] = [];
-  const result:Array<string> = [];
+const getUniqueCityNames = (offers: Offers):string[] =>[...new Set(offers.map((offer)=>offer.city.name))];
 
-  offers.map((item) => {
-    const cityName = item.city.name;
-    cities.push(cityName);
-    for (const city of cities) {
-      if (!result.includes(city)) {
-        result.push(city);
-      }
-    }
-  });
+function CitiesList({ offers, activeCity, onCity }: CitiesListProps): JSX.Element {
+  const result = getUniqueCityNames(offers);
 
   return (
     <ul className="locations__list tabs__list">
