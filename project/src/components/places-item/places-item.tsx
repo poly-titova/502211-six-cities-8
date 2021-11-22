@@ -12,9 +12,10 @@ function PlacesItem({ place, listItemHoverHandler }: PlacesItemProps): JSX.Eleme
   const href = '#';
   return (
     <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} title={place.title}>
-      <div className="place-card__mark">
-        <span>{place.isPremium}</span>
-      </div>
+      {place.isPremium === false ? null :
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>}
 
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={href}>

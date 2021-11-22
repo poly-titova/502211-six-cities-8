@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { changeCity, changeSort, changeSortOrder } from '../../store/action';
+import Header from '../header/header';
 import SortingOptions from '../sorting-options/sorting-options';
 import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
-import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offer, Offers } from '../../types/offer';
 import { ThunkAppDispatch } from '../../types/action';
 import { logoutAction } from '../../store/api-actions';
@@ -62,7 +61,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
 function MainScreen(props: ConnectedComponentProps): JSX.Element {
-  const href = '#';
   const { offers, city, listOffers, sortIn, sortOrder, authorizationStatus, userEmail, onCurrentCity, onChangeSort, onChangeListSort, logoutSistem } = props;
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemName: string) => {
@@ -74,50 +72,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
 
   return (
     <section className="result">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link header__logo-link--active" href={href}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href={href}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">{userEmail}</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  {authorizationStatus === AuthorizationStatus.Auth ?
-                    <Link
-                      className="header__nav-link"
-                      onClick={(evt) => {
-                        evt.preventDefault();
-
-                        logoutSistem();
-                      }}
-                      to={`${AppRoute.Root}`}
-                    >
-                      <span className="header__signout">Sign out</span>
-                    </Link>
-                    :
-                    <Link
-                      className="header__nav-link"
-                      to={`${AppRoute.Login}`}
-                    >
-                      <span className="header__signin">Sign in</span>
-                    </Link>}
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header authorizationStatus={authorizationStatus} userEmail={userEmail} logoutSistem={logoutSistem} />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
