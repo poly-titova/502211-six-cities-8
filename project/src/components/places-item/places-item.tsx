@@ -1,6 +1,10 @@
+import { FormEvent } from 'react';
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
 import { AppRoute } from '../../const';
+import { addFavoriteAction, fetchFavoritesAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
 import { Offer } from '../../types/offer';
 
 type PlacesItemProps = {
@@ -8,8 +12,31 @@ type PlacesItemProps = {
   listItemHoverHandler: (event: MouseEvent<HTMLLIElement>) => void;
 };
 
-function PlacesItem({ place, listItemHoverHandler }: PlacesItemProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  addFavorite(offerId: string) {
+    dispatch(addFavoriteAction(offerId));
+  },
+  getFavorites() {
+    dispatch(fetchFavoritesAction());
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & PlacesItemProps;
+
+function PlacesItem(props: ConnectedComponentProps): JSX.Element {
+  const { place, listItemHoverHandler, addFavorite, getFavorites } = props;
   const href = '#';
+
+  const onSubmit = async (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    await addFavorite(e.currentTarget.title);
+    await getFavorites();
+  };
+
   return (
     <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} title={place.title}>
       {place.isPremium === false ? null :
@@ -30,7 +57,7 @@ function PlacesItem({ place, listItemHoverHandler }: PlacesItemProps): JSX.Eleme
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <button className="place-card__bookmark-button button" type="button">
+          <button className="place-card__bookmark-button button" type="button" title={`${place.id}`} onSubmit={onSubmit}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -55,4 +82,5 @@ function PlacesItem({ place, listItemHoverHandler }: PlacesItemProps): JSX.Eleme
   );
 }
 
-export default PlacesItem;
+export { PlacesItem };
+export default connector(PlacesItem);

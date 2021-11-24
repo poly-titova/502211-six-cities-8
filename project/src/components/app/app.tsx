@@ -43,7 +43,7 @@ function App(props: PropsFromRedux): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen offers={offers} />}
+          render={() => <FavoritesScreen />}
         >
         </PrivateRoute>
         <Route exact path={`${AppRoute.Room}/:id`}>

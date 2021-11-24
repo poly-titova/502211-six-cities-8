@@ -4,16 +4,12 @@ import PlacesItem from '../places-item/places-item';
 import Header from '../header/header';
 import { logoutAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
-import { Offers } from '../../types/offer';
 import { State } from '../../types/state';
 
-type FavoritesScreenProps = {
-  offers: Offers;
-};
-
-const mapStateToProps = ({ authorizationStatus, userEmail }: State) => ({
+const mapStateToProps = ({ authorizationStatus, userEmail, favorites }: State) => ({
   authorizationStatus,
   userEmail,
+  favorites,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -25,12 +21,10 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & FavoritesScreenProps;
 
-function FavoritesScreen(props: ConnectedComponentProps): JSX.Element {
-  const { offers, authorizationStatus, userEmail, logoutSistem } = props;
+function FavoritesScreen(props: PropsFromRedux): JSX.Element {
+  const { authorizationStatus, userEmail, favorites, logoutSistem } = props;
   const href = '#';
-  const favorites = offers.filter((offer) => offer.isFavorite);
 
   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
