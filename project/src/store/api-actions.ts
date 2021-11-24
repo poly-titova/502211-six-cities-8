@@ -1,9 +1,9 @@
 import { ThunkActionResult } from '../types/action';
-import { loadOffers, redirectToRoute, requireAuthorization, requireLogout, getEmail } from './action';
+import { loadOffers, redirectToRoute, requireAuthorization, requireLogout, getEmail, loadReviews } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
 import { toast } from 'react-toastify';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
-import { adapt } from '../types/types';
+import { adaptOffer, adaptReview } from '../types/types';
 import { AuthData } from '../types/auth-data';
 
 const AUTH_FAIL_MESAGE = 'Не забудьте авторизоваться';
@@ -11,7 +11,7 @@ const AUTH_FAIL_MESAGE = 'Не забудьте авторизоваться';
 export const fetchOfferAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<unknown>(APIRoute.Offers);
-    dispatch(loadOffers(adapt(data)));
+    dispatch(loadOffers(adaptOffer(data)));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
@@ -40,4 +40,16 @@ export const logoutAction = (): ThunkActionResult =>
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     dispatch(getEmail(''));
     dispatch(requireLogout());
+  };
+
+export const addReviewAction = (offerId: number, comment: string, rating: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const { data: { token } } = await api.post<{ token: Token }>(`${APIRoute.Reviews}/${offerId}`, { comment, rating });
+    saveToken(token);
+  };
+
+export const fetchReviewsAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<unknown>(`${APIRoute.Reviews}/${id}`);
+    dispatch(loadReviews(adaptReview(data)));
   };

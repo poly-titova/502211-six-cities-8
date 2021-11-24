@@ -1,5 +1,5 @@
-import { Host, Location, City, Offer } from './offer';
-import { User, Review } from './review';
+import { Host, Location, City, Offer, Offers } from './offer';
+import { User, Review, Reviews } from './review';
 
 const isRecord = (obj: unknown): obj is Record<string, unknown> => typeof obj === 'object' && obj !== null;
 
@@ -9,7 +9,6 @@ const toN = (data: unknown, defValue: number) => typeof data === 'number' ? data
 const toS = (data: unknown, defValue: string) => typeof data === 'string' ? data : defValue;
 const toB = (data: unknown, defValue: boolean) => typeof data === 'boolean' ? data : defValue;
 const toA = (data: unknown, defValue: string[] = []) => !isArray(data) ? defValue : data.map((el) => toS(el, ''));
-const toR = (data: unknown, defValue: Review[] = []) => !isArray(data) ? defValue : data.map((el) => toReviews(el));
 
 const toLocation = (data: unknown): Location => {
   if (!isRecord(data)) {
@@ -35,22 +34,6 @@ const toHost = (data: unknown): Host => {
   return { avatarUrl: toS(avatarUrl, ''), id: toN(id, 0), name: toS(name, ''), isPro: toB(isPro, false) };
 };
 
-const toUser = (data: unknown): User => {
-  if (!isRecord(data)) {
-    throw new Error('User не правильный');
-  }
-  const { avatarUrl, id, isPro, name } = data;
-  return { avatarUrl: toS(avatarUrl, ''), id: toN(id, 0), isPro: toB(isPro, false), name: toS(name, '') };
-};
-
-const toReviews = (data: unknown): Review => {
-  if (!isRecord(data)) {
-    throw new Error('Reviews не правильный');
-  }
-  const { comment, date, id, rating, user } = data;
-  return { comment: toS(comment, ''), date: toS(date, ''), id: toN(id, 0), rating: toN(rating, 0), user: toUser(user) };
-};
-
 const toOffer = (item: unknown): Offer => {
   if (!isRecord(item)) {
     throw new Error('Сервер передал не валидные данные');
@@ -66,7 +49,6 @@ const toOffer = (item: unknown): Offer => {
     location,
     price,
     rating,
-    reviews,
     title,
     type,
   } = item;
@@ -85,15 +67,37 @@ const toOffer = (item: unknown): Offer => {
     previewImage: toS(item['preview_image'], ''),
     price: toN(price, 0),
     rating: toN(rating, 0),
-    reviews: toR(reviews, []),
     title: toS(title, ''),
     type: toS(type, ''),
   };
 };
 
-export const adapt = (data: unknown): Offer[] => {
+export const adaptOffer = (data: unknown): Offers => {
   if (!isArray(data)) {
     throw new Error('Полученные данные не являються массивом');
   }
   return data.map(toOffer);
+};
+
+const toUser = (data: unknown): User => {
+  if (!isRecord(data)) {
+    throw new Error('User не правильный');
+  }
+  const { avatarUrl, id, isPro, name } = data;
+  return { avatarUrl: toS(avatarUrl, ''), id: toN(id, 0), isPro: toB(isPro, false), name: toS(name, '') };
+};
+
+const toReview = (item: unknown): Review => {
+  if (!isRecord(item)) {
+    throw new Error('Сервер передал не валидные данные');
+  }
+  const { comment, date, id, rating, user } = item;
+  return { comment: toS(comment, ''), date: toS(date, ''), id: toN(id, 0), rating: toN(rating, 0), user: toUser(user) };
+};
+
+export const adaptReview = (data: unknown): Reviews => {
+  if (!isArray(data)) {
+    throw new Error('Полученные данные не являються массивом');
+  }
+  return data.map(toReview);
 };

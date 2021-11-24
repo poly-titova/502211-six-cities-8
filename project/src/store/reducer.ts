@@ -10,6 +10,7 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   userEmail: '',
+  reviews: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -28,6 +29,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, authorizationStatus: AuthorizationStatus.NoAuth };
     case ActionType.GetEmail:
       return { ...state, userEmail: action.payload };
+    case ActionType.LoadReviews:
+      return { ...state, reviews: action.payload, isDataLoaded: true };
     default:
       return state;
   }

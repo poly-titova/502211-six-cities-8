@@ -1,5 +1,3 @@
-import { Review } from './review';
-
 export type Offer = {
   bedrooms: number;
   city: City;
@@ -17,7 +15,6 @@ export type Offer = {
   rating: number;
   title: string;
   type: string;
-  reviews: Review[];
 };
 
 export type City = {
