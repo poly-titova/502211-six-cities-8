@@ -7,7 +7,7 @@ import ReviewsList from '../reviews-list/reviews-list';
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import { AuthorizationStatus } from '../../const';
-import { logoutAction } from '../../store/api-actions';
+import { logoutAction, fetchReviewsAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { Offer, Offers } from '../../types/offer';
 import { State } from '../../types/state';
@@ -16,14 +16,18 @@ type RoomScreenProps = {
   offers: Offers;
 };
 
-const mapStateToProps = ({ authorizationStatus, userEmail }: State) => ({
+const mapStateToProps = ({ authorizationStatus, userEmail, reviews }: State) => ({
   authorizationStatus,
   userEmail,
+  reviews,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   logoutSistem() {
     dispatch(logoutAction());
+  },
+  getReviews(id: number) {
+    dispatch(fetchReviewsAction(id));
   },
 });
 
@@ -33,7 +37,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & RoomScreenProps;
 
 function RoomScreen(props: ConnectedComponentProps): JSX.Element {
-  const { offers, authorizationStatus, userEmail, logoutSistem } = props;
+  const { offers, authorizationStatus, userEmail, reviews, logoutSistem } = props;
   const { id } = useParams<{ id: string }>();
   const idOffer = numberFromParam(id);
   const offer = offers[idOffer];
@@ -140,7 +144,7 @@ function RoomScreen(props: ConnectedComponentProps): JSX.Element {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`property__avatar-wrapper user__avatar-wrapper ${offer.host.isPro ? 'property__avatar-wrapper--pro' : ''}`}>
                     <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
 
@@ -148,9 +152,10 @@ function RoomScreen(props: ConnectedComponentProps): JSX.Element {
                     {offer.host.name}
                   </span>
 
-                  <span className="property__user-status">
-                    {offer.host.isPro}
-                  </span>
+                  {offer.host.isPro ?
+                    <span className="property__user-status">
+                      Pro
+                    </span> : null}
                 </div>
 
                 <div className="property__description">
@@ -161,9 +166,9 @@ function RoomScreen(props: ConnectedComponentProps): JSX.Element {
               </div>
 
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offer.reviews === undefined ? '0' : offer.reviews.length}</span></h2>
-                {offer.reviews !== undefined ? <ReviewsList reviews={offer.reviews} /> : null}
-                {authorizationStatus === AuthorizationStatus.Auth ? <FormComment /> : null}
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews === undefined ? '0' : reviews.length}</span></h2>
+                {reviews !== undefined ? <ReviewsList reviews={reviews} /> : null}
+                {authorizationStatus === AuthorizationStatus.Auth ? <FormComment currentOffer={idOffer}/> : null}
               </section>
             </div>
           </div>
