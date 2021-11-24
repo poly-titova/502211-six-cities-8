@@ -11,6 +11,7 @@ const initialState = {
   isDataLoaded: false,
   userEmail: '',
   reviews: [],
+  favorites: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -31,6 +32,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, userEmail: action.payload };
     case ActionType.LoadReviews:
       return { ...state, reviews: action.payload, isDataLoaded: true };
+    case ActionType.LoadFavorites:
+      return { ...state, favorites: state.offers.filter((offer) => offer.id === parseInt(action.payload, 10)), isDataLoaded: true };
     default:
       return state;
   }

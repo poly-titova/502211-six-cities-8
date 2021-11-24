@@ -15,6 +15,7 @@ export enum ActionType {
   RedirectToRoute = 'main/redirectToRoute',
   GetEmail = 'login/getEmail',
   LoadReviews = 'data/loadReviews',
+  LoadFavorites = 'data/loadFavorites',
 }
 
 export type ChangeCity = {
@@ -60,7 +61,12 @@ export type LoadReviews = {
   payload: Reviews;
 };
 
-export type Actions = ChangeCity | ChangeSort | ChangeSortOrder | LoadOffers | RequireAuthorization | RequireLogout | RedirectToRoute | GetEmail | LoadReviews;
+export type LoadFavorites = {
+  type: ActionType.LoadFavorites;
+  payload: string;
+};
+
+export type Actions = ChangeCity | ChangeSort | ChangeSortOrder | LoadOffers | RequireAuthorization | RequireLogout | RedirectToRoute | GetEmail | LoadReviews | LoadFavorites;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>
 

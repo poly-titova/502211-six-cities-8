@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/action';
-import { loadOffers, redirectToRoute, requireAuthorization, requireLogout, getEmail, loadReviews } from './action';
+import { loadOffers, redirectToRoute, requireAuthorization, requireLogout, getEmail, loadReviews, loadFavorites } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
 import { toast } from 'react-toastify';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
@@ -52,4 +52,16 @@ export const fetchReviewsAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<unknown>(`${APIRoute.Reviews}/${id}`);
     dispatch(loadReviews(adaptReview(data)));
+  };
+
+export const addFavoriteAction = (offerId: string): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const { data: { token } } = await api.post<{ token: Token }>(APIRoute.Favorites, { offerId });
+    saveToken(token);
+  };
+
+export const fetchFavoritesAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<string>(APIRoute.Favorites);
+    dispatch(loadFavorites(data));
   };

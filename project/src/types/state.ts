@@ -11,4 +11,5 @@ export type State = {
   isDataLoaded: boolean,
   userEmail: string,
   reviews: Reviews,
+  favorites: Offers,
 };

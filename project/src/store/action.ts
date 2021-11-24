@@ -1,4 +1,4 @@
-import { ActionType, ChangeCity, ChangeSort, ChangeSortOrder, LoadOffers, RedirectToRoute, RequireAuthorization, RequireLogout, GetEmail, LoadReviews } from '../types/action';
+import { ActionType, ChangeCity, ChangeSort, ChangeSortOrder, LoadOffers, RedirectToRoute, RequireAuthorization, RequireLogout, GetEmail, LoadReviews, LoadFavorites } from '../types/action';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { Offers } from '../types/offer';
 import { Reviews } from '../types/review';
@@ -44,4 +44,9 @@ export const getEmail = (email: string): GetEmail => ({
 export const loadReviews = (reviews: Reviews): LoadReviews => ({
   type: ActionType.LoadReviews,
   payload: reviews,
+});
+
+export const loadFavorites = (offerId: string): LoadFavorites => ({
+  type: ActionType.LoadFavorites,
+  payload: offerId,
 });
