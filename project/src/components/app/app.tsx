@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import MainScreen from '../main-screen/main-screen';
 import SignInScreen from '../signin-screen/signin-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -10,6 +10,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import { State } from '../../types/state';
 import { isCheckedAuth } from '../../hotel';
+import browserHistory from '../../browser-history';
 
 const mapToStateProps = ({ authorizationStatus, isDataLoaded, offers }: State) => ({
   authorizationStatus,
@@ -31,7 +32,7 @@ function App(props: PropsFromRedux): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Root}>
           <MainScreen offers={offers} />
@@ -42,8 +43,7 @@ function App(props: PropsFromRedux): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen offers={offers} />}
-          authorizationStatus={AuthorizationStatus.Auth}
+          render={() => <FavoritesScreen />}
         >
         </PrivateRoute>
         <Route exact path={`${AppRoute.Room}/:id`}>
