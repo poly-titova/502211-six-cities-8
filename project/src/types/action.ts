@@ -1,7 +1,7 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { AuthorizationStatus } from '../const';
-import { Offers } from './offer';
+import { Offer, Offers } from './offer';
 import { Reviews } from './review';
 import { State } from './state';
 
@@ -15,7 +15,7 @@ export enum ActionType {
   RedirectToRoute = 'main/redirectToRoute',
   GetEmail = 'login/getEmail',
   LoadReviews = 'data/loadReviews',
-  LoadFavorites = 'data/loadFavorites',
+  SetCurrentOffer = 'main/setCurrentOffer',
 }
 
 export type ChangeCity = {
@@ -61,12 +61,12 @@ export type LoadReviews = {
   payload: Reviews;
 };
 
-export type LoadFavorites = {
-  type: ActionType.LoadFavorites;
-  payload: string;
+export type SetCurrentOffer = {
+  type: ActionType.SetCurrentOffer;
+  payload: Offer;
 };
 
-export type Actions = ChangeCity | ChangeSort | ChangeSortOrder | LoadOffers | RequireAuthorization | RequireLogout | RedirectToRoute | GetEmail | LoadReviews | LoadFavorites;
+export type Actions = ChangeCity | ChangeSort | ChangeSortOrder | LoadOffers | RequireAuthorization | RequireLogout | RedirectToRoute | GetEmail | LoadReviews | SetCurrentOffer;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>
 
