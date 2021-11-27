@@ -40,7 +40,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & RoomScreenProps;
 
 function RoomScreen(props: ConnectedComponentProps): JSX.Element {
-  const { offers, authorizationStatus, userEmail, reviews, logoutSistem, addFavorite } = props;
+  const { offers, authorizationStatus, userEmail, reviews, logoutSistem, getReviews, addFavorite } = props;
   const { id } = useParams<{ id: string }>();
   const idOffer = numberFromParam(id);
   const offer = offers[idOffer];
@@ -58,6 +58,10 @@ function RoomScreen(props: ConnectedComponentProps): JSX.Element {
     return (
       <NotFoundScreen />
     );
+  }
+
+  if (offer) {
+    getReviews(idOffer);
   }
 
   const sorted = [...offers].sort((a: Offer, b: Offer) => b.location.latitude - a.location.latitude);

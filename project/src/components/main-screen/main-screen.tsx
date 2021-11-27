@@ -84,19 +84,19 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{listOffers.length} places to stay in {city}</b>
+              <h2 className="visually-hidden">{listOffers.length === 0 ? 'No places to stay available' : 'Places'}</h2>
+              <b className="places__found">{listOffers.length === 0 ? 0 : listOffers.length} places to stay in {city}</b>
 
               <SortingOptions sortIn={sortIn} sortOrder={sortOrder} onChangeSort={onChangeSort} onChangeListSort={onChangeListSort} />
 
               <div className="cities__places-list places__list tabs__content">
-                <PlacesList places={listOffers} onListItemHover={onListItemHover} />
+                <PlacesList places={listOffers.length === 0 ? [] : listOffers} onListItemHover={onListItemHover} />
               </div>
             </section>
 
             <div className="cities__right-section">
               <section className="cities__map map" style={{ height: '500px' }}>
-                <Map city={cityFirst} points={listOffers} selectedPoint={selectedPoint} />
+                <Map city={cityFirst} points={listOffers.length === 0 ? [] : listOffers} selectedPoint={selectedPoint} />
               </section>
             </div>
           </div>
