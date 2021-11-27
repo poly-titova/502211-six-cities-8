@@ -5,11 +5,12 @@ import Header from '../header/header';
 import { logoutAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
+import { Offers } from '../../types/offer';
 
-const mapStateToProps = ({ authorizationStatus, userEmail, favorites }: State) => ({
+const mapStateToProps = ({ offers, authorizationStatus, userEmail }: State) => ({
+  offers,
   authorizationStatus,
   userEmail,
-  favorites,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -23,12 +24,16 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function FavoritesScreen(props: PropsFromRedux): JSX.Element {
-  const { authorizationStatus, userEmail, favorites, logoutSistem } = props;
+  const { offers, authorizationStatus, userEmail, logoutSistem } = props;
   const href = '#';
+  const favorites = offers.filter((offer) => offer.isFavorite);
 
   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
   };
+
+  const getUniqueCityNames = (cityNames: Offers): string[] => [...new Set(favorites.map((offer) => offer.city.name))];
+  const result = getUniqueCityNames(favorites);
 
   return (
     <section className="result">
@@ -36,22 +41,28 @@ function FavoritesScreen(props: PropsFromRedux): JSX.Element {
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
+            <h1 className="favorites__title">{favorites.length === 0 ? 'Nothing yet saved' : 'Saved listing'}</h1>
             <ul className="favorites__list">
-              {favorites.map((item, id) => {
-                const keyValue = `${id}`;
+              {result.map((city, cityId) => {
+                const keyValue = `${cityId}`;
+                const filtered = favorites.filter((offer) => offer.city.name === city);
                 return (
                   <li key={keyValue} className="favorites__locations-items">
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
                         <a className="locations__item-link" href={href}>
-                          <span>{item.city.name}</span>
+                          <span>{city}</span>
                         </a>
                       </div>
                     </div>
-                    <div className="favorites__places">
-                      <PlacesItem place={item} listItemHoverHandler={listItemHoverHandler} />
-                    </div>
+                    {filtered.map((item, itemId) => {
+                      const keyValueItem = `${itemId}`;
+                      return (
+                        <div key={keyValueItem} className="favorites__places">
+                          <PlacesItem place={item} listItemHoverHandler={listItemHoverHandler} />
+                        </div>
+                      );
+                    })}
                   </li>
                 );
               })}
