@@ -34,7 +34,7 @@ function PlacesItem(props: ConnectedComponentProps): JSX.Element {
   };
 
   return (
-    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} title={place.title}>
+    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} id={`${place.id}`}>
       {place.isPremium === false ? null :
         <div className="place-card__mark">
           <span>Premium</span>

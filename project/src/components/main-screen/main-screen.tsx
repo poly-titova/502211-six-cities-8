@@ -90,7 +90,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
             </section>
 
             <div className="cities__right-section">
-              <section className="cities__map map" style={{ height: '500px' }}>
+              <section className="cities__map map">
                 <Map city={cityFirst} points={listOffers.length === 0 ? [] : listOffers} selectedPoint={selectedPoint} />
               </section>
             </div>
