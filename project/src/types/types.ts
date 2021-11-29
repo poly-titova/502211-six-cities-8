@@ -34,7 +34,7 @@ const toHost = (data: unknown): Host => {
   return { avatarUrl: toS(avatarUrl, ''), id: toN(id, 0), name: toS(name, ''), isPro: toB(isPro, false) };
 };
 
-const toOffer = (item: unknown): Offer => {
+export const toOffer = (item: unknown): Offer => {
   if (!isRecord(item)) {
     throw new Error('Сервер передал не валидные данные');
   }

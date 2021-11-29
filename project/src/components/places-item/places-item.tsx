@@ -1,9 +1,8 @@
-import { FormEvent } from 'react';
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppRoute } from '../../const';
-import { addFavoriteAction, fetchFavoritesAction } from '../../store/api-actions';
+import { addFavoriteAction, fetchOfferAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { Offer } from '../../types/offer';
 
@@ -13,11 +12,8 @@ type PlacesItemProps = {
 };
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  addFavorite(offerId: string) {
-    dispatch(addFavoriteAction(offerId));
-  },
-  getFavorites() {
-    dispatch(fetchFavoritesAction());
+  addFavorite(offerId: number, place: Offer) {
+    dispatch(addFavoriteAction(offerId, place));
   },
 });
 
@@ -27,18 +23,18 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & PlacesItemProps;
 
 function PlacesItem(props: ConnectedComponentProps): JSX.Element {
-  const { place, listItemHoverHandler, addFavorite, getFavorites } = props;
+  const { place, listItemHoverHandler, addFavorite } = props;
   const href = '#';
 
-  const onSubmit = async (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onSubmit = async () => {
+    place.isFavorite = !place.isFavorite;
 
-    await addFavorite(e.currentTarget.title);
-    await getFavorites();
+    await addFavorite(place.id, place);
+    await fetchOfferAction();
   };
 
   return (
-    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} title={place.title}>
+    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler} id={`${place.id}`}>
       {place.isPremium === false ? null :
         <div className="place-card__mark">
           <span>Premium</span>
@@ -57,7 +53,7 @@ function PlacesItem(props: ConnectedComponentProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <button className="place-card__bookmark-button button" type="button" title={`${place.id}`} onSubmit={onSubmit}>
+          <button className={`place-card__bookmark-button ${place.isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button" title={`${place.id}`} onClick={onSubmit}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -67,7 +63,7 @@ function PlacesItem(props: ConnectedComponentProps): JSX.Element {
 
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${place.rating}` }} />
+            <span style={{ width: `${100 - 100 / Math.round(place.rating)}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -28,7 +28,21 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    map.setView([city.city.location.latitude, city.city.location.longitude], city.city.location.zoom);
+  }, [city, map]);
+
+  useEffect(() => {
     if (map) {
+      map.eachLayer((layer) => {
+        if(layer instanceof leaflet.marker){
+          map.removeLayer(layer);
+        }
+      });
+
       points.forEach((point) => {
         const marker = leaflet.marker({
           lat: point.location.latitude,
@@ -44,7 +58,7 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
     }
   }, [map, points, selectedPoint]);
 
-  return <div style={{ height: '500px' }} ref={mapRef}></div>;
+  return <div style={{ height: '100%' }} ref={mapRef}></div>;
 }
 
 export default Map;

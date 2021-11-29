@@ -1,7 +1,8 @@
-import { ChangeEvent, useState } from 'react';
 import { FormEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { fetchReviewsAction, addReviewAction } from '../../store/api-actions';
+import { useUserReview } from '../../hooks/useUserReview';
+import { useUserRating } from '../../hooks/useUserRating';
 import { ThunkAppDispatch } from '../../types/action';
 
 type FormCommentProps = {
@@ -25,16 +26,9 @@ type ConnectedComponentProps = PropsFromRedux & FormCommentProps;
 function FormComment(props: ConnectedComponentProps): JSX.Element {
   const { currentOffer, addReview, getReviews } = props;
   const href = '#';
-  const [rating, setRating] = useState<number>(0);
-  const [review, setReview] = useState<string>('');
 
-  const updateRating = (e: ChangeEvent<HTMLInputElement>) => {
-    setRating(parseInt(e.target.value, 10));
-  };
-
-  const updateReview = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(e.target.value);
-  };
+  const [rating, updateRating] = useUserRating();
+  const [review, updateReview] = useUserReview();
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

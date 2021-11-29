@@ -4,7 +4,7 @@ import PlacesItem from '../places-item/places-item';
 
 type PlacesListProps = {
   places: Offers;
-  onListItemHover: (listItemName: string) => void;
+  onListItemHover: (listItemId: string) => void;
 };
 
 function PlacesList(props: PlacesListProps): JSX.Element {
@@ -12,7 +12,7 @@ function PlacesList(props: PlacesListProps): JSX.Element {
 
   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
-    onListItemHover(event.currentTarget.title);
+    onListItemHover(event.currentTarget.id);
   };
 
   return (

@@ -7,7 +7,7 @@ import ReviewsList from '../reviews-list/reviews-list';
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import { AuthorizationStatus } from '../../const';
-import { logoutAction, fetchReviewsAction } from '../../store/api-actions';
+import { logoutAction, fetchReviewsAction, addFavoriteAction, fetchOfferAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { Offer, Offers } from '../../types/offer';
 import { State } from '../../types/state';
@@ -29,6 +29,9 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   getReviews(id: number) {
     dispatch(fetchReviewsAction(id));
   },
+  addFavorite(offerId: number, place: Offer) {
+    dispatch(addFavoriteAction(offerId, place));
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -37,7 +40,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & RoomScreenProps;
 
 function RoomScreen(props: ConnectedComponentProps): JSX.Element {
-  const { offers, authorizationStatus, userEmail, reviews, logoutSistem } = props;
+  const { offers, authorizationStatus, userEmail, reviews, logoutSistem, getReviews, addFavorite } = props;
   const { id } = useParams<{ id: string }>();
   const idOffer = numberFromParam(id);
   const offer = offers[idOffer];
@@ -57,9 +60,20 @@ function RoomScreen(props: ConnectedComponentProps): JSX.Element {
     );
   }
 
+  if (offer) {
+    getReviews(idOffer);
+  }
+
   const sorted = [...offers].sort((a: Offer, b: Offer) => b.location.latitude - a.location.latitude);
   const nearPlaces = [sorted[idOffer - 1], sorted[idOffer + 1], sorted[idOffer + 2]];
   const nearPlacesWithCurrentOffer = [sorted[idOffer - 1], sorted[idOffer], sorted[idOffer + 1], sorted[idOffer + 2]];
+
+  const onSubmit = async () => {
+    offer.isFavorite = !offer.isFavorite;
+
+    await addFavorite(offer.id, offer);
+    await fetchOfferAction();
+  };
 
   return (
     <section className="result">
@@ -91,7 +105,7 @@ function RoomScreen(props: ConnectedComponentProps): JSX.Element {
                   {offer.title}
                 </h1>
 
-                <button className="property__bookmark-button button" type="button">
+                <button className={`property__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button" onClick={onSubmit}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -101,7 +115,7 @@ function RoomScreen(props: ConnectedComponentProps): JSX.Element {
 
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: `${offer.rating}` }} />
+                  <span style={{ width: `${100 - 100 / Math.round(offer.rating)}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{offer.rating}</span>

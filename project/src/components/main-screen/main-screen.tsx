@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { changeCity, changeSort, changeSortOrder } from '../../store/action';
 import Header from '../header/header';
@@ -6,6 +5,7 @@ import SortingOptions from '../sorting-options/sorting-options';
 import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
+import { useSelectedPoint } from '../../hooks/useSelectedPoint';
 import { Offer, Offers } from '../../types/offer';
 import { ThunkAppDispatch } from '../../types/action';
 import { logoutAction } from '../../store/api-actions';
@@ -62,12 +62,7 @@ type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
 function MainScreen(props: ConnectedComponentProps): JSX.Element {
   const { offers, city, listOffers, sortIn, sortOrder, authorizationStatus, userEmail, onCurrentCity, onChangeSort, onChangeListSort, logoutSistem } = props;
-  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
-  const onListItemHover = (listItemName: string) => {
-    const currentPoint = offers.find((offer) => offer.title === listItemName);
-    setSelectedPoint(currentPoint);
-  };
-
+  const [selectedPoint, onListItemHover] = useSelectedPoint(offers);
   const cityFirst = listOffers[0];
 
   return (
@@ -82,21 +77,21 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
         </div>
 
         <div className="cities">
-          <div className="cities__places-container container">
+          <div className="cities__places-container container" style={{ height: '70vh' }}>
             <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{listOffers.length} places to stay in {city}</b>
+              <h2 className="visually-hidden">{listOffers.length === 0 ? 'No places to stay available' : 'Places'}</h2>
+              <b className="places__found">{listOffers.length === 0 ? 0 : listOffers.length} places to stay in {city}</b>
 
               <SortingOptions sortIn={sortIn} sortOrder={sortOrder} onChangeSort={onChangeSort} onChangeListSort={onChangeListSort} />
 
               <div className="cities__places-list places__list tabs__content">
-                <PlacesList places={listOffers} onListItemHover={onListItemHover} />
+                <PlacesList places={listOffers.length === 0 ? [] : listOffers} onListItemHover={onListItemHover} />
               </div>
             </section>
 
             <div className="cities__right-section">
-              <section className="cities__map map" style={{ height: '500px' }}>
-                <Map city={cityFirst} points={listOffers} selectedPoint={selectedPoint} />
+              <section className="cities__map map">
+                <Map city={cityFirst} points={listOffers.length === 0 ? [] : listOffers} selectedPoint={selectedPoint} />
               </section>
             </div>
           </div>
